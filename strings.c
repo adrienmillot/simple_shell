@@ -17,7 +17,7 @@ int _strlen(char *s)
 }
 
 /**
- * str_concat - concatenates two strings.
+ * _str_concat - concatenates two strings.
  *
  * @s1: char pointer to concatenate
  * @s2: char pointer to concatenate
@@ -78,7 +78,7 @@ int _strcmp(char *s1, char *s2)
  *
  * @haystack: string where to search
  * @needle: string to search
- * @prmBegin: force to start at begin if true 
+ * @prmBegin: force to start at begin if true
  *
  * Return: the address to first location
  */

@@ -9,25 +9,18 @@
  *
  * @prmSignal: signal value
  */
-void ctrlC(int prmSignal)
+void ctrlC(int prmSignal __attribute__((unused)))
 {
-	if (prmSignal == SIGINT)
-	{
 		write(STDIN_FILENO, "\n", 1);
 		write(STDIN_FILENO, PROMPT, 2);
-	}
 }
 
 /**
  * main - main executable
  *
- * @prmArgc:
- * @prmArgv:
- * @prmEnv:
- *
  * Return: 0 if succeded
  */
-int main()
+int main(void)
 {
 	char *buffer = NULL, *argv[5];
 	size_t bufferSize = 0;
@@ -47,17 +40,11 @@ int main()
 			break;
 		}
 
-		if (_strcmp(buffer, "exit") == 0)
-		{
-			free(buffer);
-			exit(EXIT_SUCCESS);
-		}
-
 		/* Split arguments*/
 		_parsingArguments(buffer, argv);
 
 		if (argv == NULL || argv[0] == NULL)
-			perror("Command not found !\n");
+			continue;
 		else if (_isBuildIn(argv[0]) == 1)
 			perror("Custom action to execute !\n");
 		else
@@ -65,7 +52,8 @@ int main()
 
 	} while (buffer != NULL);
 
-	free(buffer);
+	if (buffer != NULL && isatty(STDIN_FILENO))
+		free(buffer);
 
 	return (EXIT_SUCCESS);
 }

@@ -61,8 +61,11 @@ environment_t *_getLastNode(environment_t *prmHeadNode)
  *
  * Return: last element
  */
-environment_t *_addNodeEnd(environment_t **prmHeadNode, char *prmName, char *prmValue)
-{
+environment_t *_addNodeEnd(
+	environment_t **prmHeadNode,
+	char *prmName,
+	char *prmValue
+) {
 	environment_t *new, *last;
 
 	if (prmHeadNode == NULL)
@@ -79,6 +82,7 @@ environment_t *_addNodeEnd(environment_t **prmHeadNode, char *prmName, char *prm
 		last = _getLastNode(*prmHeadNode);
 		if (last == NULL)
 		{
+			free(new);
 			return (NULL);
 		}
 		last->next = new;
@@ -99,6 +103,8 @@ void _freeList(environment_t *prmHeadNode)
 	if (prmHeadNode == NULL)
 		return;
 	_freeList(prmHeadNode->next);
+	free(prmHeadNode->name);
+	free(prmHeadNode->value);
 	free(prmHeadNode);
 }
 

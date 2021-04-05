@@ -8,6 +8,7 @@
  *
  * @prmString: argument's string
  * @prmSeparator: separators
+ * @prmArgv: argument's array
  */
 void _parsingString(char *prmString, char *prmSeparator, char *prmArgv[])
 {
@@ -59,7 +60,7 @@ void _parsingArguments(char *prmParametersLine, char *prmArgv[])
 environment_t *_parsingEnvironment(char *prmEnvironmentName)
 {
 	char *name, *strToken, *environmentVariable, *tmpEnv;
-	environment_t *environmentList;
+	environment_t *environmentList, *new;
 	int sizeEnv;
 
 	environmentList = NULL;
@@ -72,17 +73,26 @@ environment_t *_parsingEnvironment(char *prmEnvironmentName)
 	tmpEnv = _strcpy(tmpEnv, environmentVariable);
 
 	strToken = strtok(tmpEnv, "=");
+	(void) strToken;
 
 	if (strToken == NULL)
 		return (NULL);
 
 	name = strToken;
+	(void) name;
 
 	while (strToken != NULL)
 	{
 		if (strToken != name)
 		{
-			_addNodeEnd(&environmentList, name, strToken);
+			new = _addNodeEnd(&environmentList, name, strToken);
+
+			if (new == NULL)
+			{
+				_freeList(environmentList);
+				free(tmpEnv);
+				return (NULL);
+			}
 		}
 		strToken = strtok(NULL, ":");
 	}
@@ -90,38 +100,3 @@ environment_t *_parsingEnvironment(char *prmEnvironmentName)
 
 	return (environmentList);
 }
-
-/**
- * _strtok - split a string
- *
- * @prmString:
- * @prmSeparators:
- *
- * Return: First occurence
- */
-/*char *_strtok_r(char *str, const char *delim, char **saveptr)
-{
-	int cLoop = 0, cLoop2 = 0;
-	char *token = "";
-
-	if (prmString == NULL && prmSavePtr == NULL)
-		return (NULL);
-
-	if (prmString != NULL)
-	{
-		while (prmString[cLoop] != '\0')
-		{
-			while(prmSeparators[cLoop2] != '\0')
-			{
-				if (prmString[cLoop] == prmSeparators[cLoop2])
-				{
-					_strncat(token, prmString, cLoop);
-
-					return (token);
-				}
-				cLoop2++;
-			}
-			cLoop++;
-		}
-	}
-}*/

@@ -47,6 +47,7 @@ void _execCmd(char *prmArguments[]);
  */
 char *_getenv(char *prmEnvironmentName);
 char *_which(char *prmCommandName);
+char *_generateAbsolutePath(environment_t *prmPaths, char *prmCommandName);
 
 /**
  * Linked list
@@ -64,5 +65,10 @@ void _parsingString(char *prmString, char *prmSeparator, char *prmArgv[]);
 void _parsingArguments(char *prmParametersLine, char *prmArgv[]);
 environment_t *_parsingEnvironment(char *prmEnvironmentName);
 char *_strtok(char *__restrict __s, const char *__restrict __delim);
+
+/**
+ * Memory
+ */
+void _freeDoublePointer(char **prmPtr);
 
 #endif

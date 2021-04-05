@@ -43,10 +43,9 @@ void _execCmd(char *prmArguments[])
 	child_pid = fork();
 	if (child_pid == 0)
 	{
-		signal(SIGINT, SIG_DFL);
 		/* Execute command*/
 		if (execve(prmArguments[0], prmArguments, environ) == -1)
-			perror("Error_:");
+			perror(prmArguments[0]);
 	}
 	else
 		waitpid(child_pid, &status, WUNTRACED);

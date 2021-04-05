@@ -9,7 +9,7 @@
 /**
  * _getenv - get envioronment variable
  *
- * @prmEnvironment: environment variable name
+ * @prmEnvironmentName: environment variable name
  *
  * Return: environment variable value
  */
@@ -32,17 +32,16 @@ char *_getenv(char *prmEnvironmentName)
 /**
  * _which - get path value of a command
  *
- * @prmCommandName:
+ * @prmCommandName: command name
  *
- * Return:
+ * Return: absolute path of a command
  */
 char *_which(char *prmCommandName)
 {
-	char *absolutePath = "";
+	char *absolutePath = ""/*, lastCharacter, *tmpAbsolutePath*/;
 	struct stat st;
-	environment_t *paths;
-	char lastCharacter;
-	int pathValueSize;
+	environment_t *paths, *tmpPaths;
+	/*int pathValueSize;*/
 
 	if (prmCommandName == NULL)
 		exit(EXIT_FAILURE);
@@ -55,33 +54,56 @@ char *_which(char *prmCommandName)
 		if (paths == NULL)
 			return (NULL);
 
-		while (paths != NULL)
+		tmpPaths = paths;
+
+		while (tmpPaths != NULL)
 		{
-			if (paths->value == NULL)
-				return (NULL);
-			pathValueSize = _strlen(paths->value);
-			lastCharacter = paths->value[pathValueSize - 1];
-			
-			if (lastCharacter != '/')
-				paths->value = _str_concat(paths->value, "/");
+			absolutePath = _generateAbsolutePath(tmpPaths, prmCommandName);
 
-			absolutePath = "";
-			absolutePath = _str_concat(absolutePath, paths->value);
-			absolutePath = _str_concat(absolutePath, prmCommandName);
-
+			/* Check if absolute path exist */
 			if (stat(absolutePath, &st) == 0)
 			{
+				_freeList(paths);
 				return (absolutePath);
 			}
 			free(absolutePath);
-			paths = paths->next;
+			tmpPaths = tmpPaths->next;
 		}
 		_freeList(paths);
 	}
 	else
-	{
 		return (prmCommandName);
-	}
 
 	return (NULL);
+}
+
+/**
+ * _generateAbsolutePath - Generate an absolute path from environment variable
+ *
+ * @prmPaths: path environment variable
+ * @prmCommandName: command name
+ *
+ * Return: absolute path
+ */
+char *_generateAbsolutePath(environment_t *prmPaths, char *prmCommandName)
+{
+	char *tmp, *absolutePath, lastCharacter;
+	int pathValueSize;
+
+	pathValueSize = _strlen(prmPaths->value);
+	lastCharacter = prmPaths->value[pathValueSize - 1];
+
+	if (lastCharacter != '/')
+	{
+		tmp = prmPaths->value;
+		prmPaths->value = _str_concat(tmp, "/");
+		free(tmp);
+	}
+
+	tmp = "";
+	tmp = _str_concat(tmp, prmPaths->value);
+	absolutePath = _str_concat(tmp, prmCommandName);
+	free(tmp);
+
+	return (absolutePath);
 }
