@@ -46,6 +46,7 @@ void _execCmd(char *prmArguments[])
 		/* Execute command*/
 		if (execve(prmArguments[0], prmArguments, environ) == -1)
 			perror(prmArguments[0]);
+		exit(0);
 	}
 	else
 		waitpid(child_pid, &status, WUNTRACED);
