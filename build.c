@@ -14,8 +14,8 @@
  */
 int _isBuildIn(char *prmCommandName)
 {
-	if (_strcmp(prmCommandName, "cd") == 0)
-		return (1);
+	if (_strcmp(prmCommandName, "exit") == 0)
+		exit(EXIT_SUCCESS);
 	return (0);
 }
 
