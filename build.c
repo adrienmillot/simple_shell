@@ -6,29 +6,6 @@
 #include "shell.h"
 
 /**
- * _parsingArguments - split argument's string to array
- *
- * @prmParametersLine: argument's string
- * @prmArgv: argument's array
- */
-void _parsingArguments(char *prmParametersLine, char *prmArgv[])
-{
-	char *strToken, *separators;
-	int i = 0;
-
-	separators = " \n";
-	strToken = strtok(prmParametersLine, separators);
-
-	while (strToken != NULL && _strcmp(strToken, "\n") != 0)
-	{
-		prmArgv[i] = strToken;
-		strToken = strtok(NULL, separators);
-		i++;
-	}
-	prmArgv[i] = NULL;
-}
-
-/**
  * _isBuildIn - check custom command
  *
  * @prmCommandName: command name
@@ -50,9 +27,28 @@ int _isBuildIn(char *prmCommandName)
 void _execCmd(char *prmArguments[])
 {
 	pid_t child_pid;
+	char *command;
+	int status;
 
-	if ((child_pid = fork()) == 0)
-		if (execve(prmArguments[0], prmArguments, NULL) == -1)
-			perror("Error:");
-	wait(NULL);
+	if (prmArguments == NULL || prmArguments[0] == NULL)
+		return;
+
+	/* Get the absolute path of the command */
+	command = _which(prmArguments[0]);
+
+	if (command != NULL)
+		prmArguments[0] = command;
+
+	/* Create a child */
+	child_pid = fork();
+	if (child_pid == 0)
+	{
+		signal(SIGINT, SIG_DFL);
+		/* Execute command*/
+		if (execve(prmArguments[0], prmArguments, environ) == -1)
+			perror("Error_:");
+	}
+	else
+		waitpid(child_pid, &status, WUNTRACED);
+	free(command);
 }

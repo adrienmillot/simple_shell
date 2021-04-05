@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
 /**
  * _strlen - returns the length of a string
@@ -10,38 +11,45 @@
  */
 int _strlen(char *s)
 {
-	int size = 0;
-
-	while (*s != '\0')
-	{
-		size++;
-		s++;
-	}
-
-	return (size);
+	if (s == NULL || *s == '\0')
+		return (0);
+	return (_strlen(s + 1) + 1);
 }
 
 /**
- * _strcat - concatenates two string
+ * str_concat - concatenates two strings.
  *
- * @dest: char pointer
- * @src: char pointer
+ * @s1: char pointer to concatenate
+ * @s2: char pointer to concatenate
  *
- * Return: string
+ * Return: char pointer concatenated
  */
-char *_strcat(char *dest, char *src)
+char *_str_concat(char *s1, char *s2)
 {
-	int length, d_size, s_size;
+	char *s;
+	int cLoop1, cLoop2, size;
 
-	d_size = _strlen(dest);
-	s_size = _strlen(src);
+	if (s1 == NULL)
+		s1 = "\0";
 
-	for (length = 0; length < s_size; length++)
-	{
-		dest[d_size + length] = src[length];
-	}
+	if (s2 == NULL)
+		s2 = "\0";
 
-	return (dest);
+	size = strlen(s1) + strlen(s2);
+	s = malloc(sizeof(char) * (size + 1));
+
+	if (s == NULL)
+		return (NULL);
+
+	for (cLoop1 = 0; s1[cLoop1]; cLoop1++)
+		s[cLoop1] = s1[cLoop1];
+
+	for (cLoop2 = 0; s2[cLoop2]; cLoop1++, cLoop2++)
+		s[cLoop1] = s2[cLoop2];
+
+	s[cLoop1] = '\0';
+
+	return (s);
 }
 
 /**
@@ -66,23 +74,78 @@ int _strcmp(char *s1, char *s2)
 }
 
 /**
- * _parsingString - split string to array
+ * _strstr - locates a substring.
  *
- * @prmString: argument's string
- * @prmSeparator: separators
+ * @haystack: string where to search
+ * @needle: string to search
+ * @prmBegin: force to start at begin if true 
+ *
+ * Return: the address to first location
  */
-void _parsingString(char *prmString, char *prmSeparator, char *argv[])
+char *_strstr(char *haystack, char *needle, int prmBegin)
 {
-	char *strToken;
-	int i = 0;
+	int haystackLoop = 0, needleLoop = 0, size = _strlen(needle);
 
-	strToken = strtok(prmString, prmSeparator);
-
-	while (strToken != NULL && _strcmp(strToken, "\n") != 0)
+	if (needle[0] == '\0')
 	{
-		argv[i] = strToken;
-		strToken = strtok(NULL, prmSeparator);
-		i++;
+		return (haystack);
 	}
-	argv[i] = NULL;
+
+	for (
+		haystackLoop = 0, needleLoop = 0;
+		haystack[haystackLoop + needleLoop] != '\0';
+		needleLoop++
+	)
+	{
+		if (needle[needleLoop] != haystack[haystackLoop + needleLoop])
+		{
+			if (prmBegin == 0)
+			{
+				haystackLoop += needleLoop;
+				needleLoop = 0;
+			}
+			else
+				return (NULL);
+		}
+
+		if (needleLoop == size - 1)
+		{
+			return (&haystack[haystackLoop]);
+		}
+	}
+
+	return (NULL);
+}
+
+/**
+ * _strdup - a pointer to a newly allocated space in memory,
+ *           which contains a copy of the string given as a parameter.
+ *
+ * @str: char pointer to copy
+ *
+ * Return: a new char pointer
+ */
+char *_strdup(char *str)
+{
+	char *s;
+	int cLoop;
+
+	if (str == NULL)
+	{
+		return (NULL);
+	}
+
+	s = malloc(sizeof(char) * (_strlen(str) + 1));
+
+	if (s == NULL)
+	{
+		return (NULL);
+	}
+
+	for (cLoop = 0; cLoop < _strlen(str) + 1; cLoop++)
+	{
+		s[cLoop] = str[cLoop];
+	}
+
+	return (s);
 }
