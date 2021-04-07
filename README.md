@@ -1,12 +1,12 @@
-#Simple Shell
+# Simple Shell
 
-##What is a shell
+## What is a shell
 
 THe shell is a program that receive commands from user, from keybord to send them to the explotation system in charge of executing them.
 >"Shell" signifies interface system.
 Shell designates the lowest layer of all the interfaces systems.
 
-##What's the use of a script in shell?
+## What's the use of a script in shell?
 
 On most Linux systems, a program is called bash (signifies Bourne again Shell) act as shell program.
 All shell can execute commands located in files. Each file containing commands intended for shell is called a script.
@@ -14,7 +14,7 @@ A script looks like a file text executable by the machine.
 but need to be interpreted by the terminal emulator.
 It's objective is to launch and coordinates the execution of programs without passing by the graphic interface.
 
-###Exercices
+### Exercices
 
 >Write a UNIX command line interpreter
 
@@ -27,7 +27,7 @@ The shell should:
 • Handle errors.
 • You have to handle the “end of file” condition (Ctrl+D)
 
-####Usages: 
+#### Usages: 
 
 ````
 julien@ubuntu:~/shell$ ./shell 
@@ -53,7 +53,7 @@ env-environ.c  exec    fork    mypid   ppid   printenv  promptc  shell     stat 
 
 >Handle command lines with arguments
 
-####Usage: 
+#### Usage: 
 
 ````
 /bin/ls -l
@@ -61,7 +61,7 @@ env-environ.c  exec    fork    mypid   ppid   printenv  promptc  shell     stat 
 
 >Handle the PATH
 
-####Usage:
+#### Usage:
 
 ````
 PATH=/bin/ls:/usr/bin/ls: /*and so on*/
@@ -69,7 +69,7 @@ PATH=/bin/ls:/usr/bin/ls: /*and so on*/
 
 >Implement the exit built-in, that exits the shell
 
-####Usage:
+#### Usage:
 
 ````
 exit(0);
@@ -77,7 +77,7 @@ exit(0);
 
 >Implement the env built-in, that prints the current environment
 
-####Usage:
+#### Usage:
 
 ````
 $ env /* Command line entered by user */
@@ -101,7 +101,7 @@ DISPLAY=:0
 
 getline function is usefull for getting the user input in command prompt.
 
-####Usage:
+#### Usage:
 
 ````
 _getline(&buffer, &bufferSize, stdin);
@@ -111,7 +111,7 @@ _getline(&buffer, &bufferSize, stdin);
 
 strtok function is usefull fo cutting the character(s) we want in a line
 
-####Usage:
+#### Usage:
 
 ````
 _strtok(string, "character(s)");
@@ -121,7 +121,7 @@ _strtok(string, "character(s)");
 
 exit function is usefull for exiting a program and printing an integer
 
-####Usage:
+#### Usage:
 
 ````
 $ exit 98
@@ -133,7 +133,7 @@ julien@ubuntu:~/shell$ echo $?
 
 Because we already use Ctrl+D to exit our custom shell
 
-####Usage:
+#### Usage:
 
 ````
 signal(SIGINT, SIG_IGN); /* Ignore the Ctrl+c Input */
@@ -141,7 +141,7 @@ signal(SIGINT, SIG_IGN); /* Ignore the Ctrl+c Input */
 
 >Implement the setenv and unsetenv builtin commands
 
-####Usage:
+#### Usage:
 
 ````
 
@@ -149,7 +149,7 @@ signal(SIGINT, SIG_IGN); /* Ignore the Ctrl+c Input */
 
 >Implement the builtin command cd
 
-####Usage:
+#### Usage:
 
 ````
 
@@ -157,7 +157,7 @@ signal(SIGINT, SIG_IGN); /* Ignore the Ctrl+c Input */
 
 >Handle the commands separator ';'
 
-####Usage:
+#### Usage:
 
 ````
 
@@ -165,7 +165,7 @@ signal(SIGINT, SIG_IGN); /* Ignore the Ctrl+c Input */
 
 >Handle the '&&' and '||' shell logical operators
 
-####Usage:
+#### Usage:
 
 ````
 
@@ -173,7 +173,7 @@ signal(SIGINT, SIG_IGN); /* Ignore the Ctrl+c Input */
 
 >Implement the alias builtin command
 
-####Usage:
+#### Usage:
 
 ````
 
@@ -191,7 +191,7 @@ signal(SIGINT, SIG_IGN); /* Ignore the Ctrl+c Input */
 
 >Handle comments (#)
 
-####Usage:
+#### Usage:
 
 ````
 
@@ -199,7 +199,7 @@ signal(SIGINT, SIG_IGN); /* Ignore the Ctrl+c Input */
 
 >Implement the help built-in
 
-####Usage:
+#### Usage:
 
 ````
 
@@ -207,7 +207,7 @@ signal(SIGINT, SIG_IGN); /* Ignore the Ctrl+c Input */
 
 >Implement the history built-in, without any argument
 
-####Usage:
+#### Usage:
 
 ````
 
@@ -215,7 +215,7 @@ signal(SIGINT, SIG_IGN); /* Ignore the Ctrl+c Input */
 
 >File as input
 
-####Usage:
+#### Usage:
 
 ````
 
