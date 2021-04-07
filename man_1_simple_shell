@@ -1,0 +1,47 @@
+.TH man " 6 April 2021" "Simple Shell man page"
+
+.SH NAME
+Simple Shell - takes command from user input into prompt 
+and does what the user need to do
+
+.SH SYNONPSIS
+#include "shell.h"
+
+.B Simple Shell
+.SH DESCRIPTION
+Simple Shell is a command language interpreter 
+that executes commands read from the standard input or from a file.
+
+.SH COMMAND
+The user can enter a command that the shell can provides, 
+he can also combine them as wanted if theses can work together.
+
+.SH EXAMPLES
+.br
+ls /directory/directory
+.br
+cd directory/
+.br
+cd ../..
+.br
+exit(0);
+.br
+Ctrl+D
+.br
+
+.B OUTPUT
+print file and directories in the wanted directory.
+.br
+goes into the wanted directory.
+.br
+goes backward of two directories.
+.br
+exit the program and print 0.
+.br
+exit program.
+
+.SH AUTHORS
+.br
+.B Adrien Millot : 2701@holbertonschool.com
+.br
+.B Alrick Deperiers : 2794@holbertonschool.com
