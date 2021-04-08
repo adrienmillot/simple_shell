@@ -16,7 +16,7 @@ It's objective is to launch and coordinates the execution of programs without pa
 
 ### Exercices
 
->Write a UNIX command line interpreter
+Write a UNIX command line interpreter
 
 The shell should:
 • Display a prompt and wait for the user to type a command. A command line always ends with a new line.
@@ -51,7 +51,7 @@ env-environ.c  exec    fork    mypid   ppid   printenv  promptc  shell     stat 
 #cisfun$ julien@ubuntu:~/shell$
 ````
 
->Handle command lines with arguments
+Handle command lines with arguments
 
 #### Usage: 
 
@@ -59,7 +59,7 @@ env-environ.c  exec    fork    mypid   ppid   printenv  promptc  shell     stat 
 /bin/ls -l
 ````
 
->Handle the PATH
+Handle the PATH
 
 #### Usage:
 
@@ -67,7 +67,7 @@ env-environ.c  exec    fork    mypid   ppid   printenv  promptc  shell     stat 
 PATH=/bin/ls:/usr/bin/ls: /*and so on*/
 ````
 
->Implement the exit built-in, that exits the shell
+Implement the exit built-in, that exits the shell
 
 #### Usage:
 
@@ -75,7 +75,7 @@ PATH=/bin/ls:/usr/bin/ls: /*and so on*/
 exit(0);
 ````
 
->Implement the env built-in, that prints the current environment
+Implement the env built-in, that prints the current environment
 
 #### Usage:
 
@@ -95,11 +95,11 @@ PATH=/home/julien/bin:/home/julien/.local/bin:/usr/local/sbin:/usr/local/bin:/us
 DISPLAY=:0
 ````
 
->Contribute to a test suite for your shell. (This is a task shared by everyone in the class)
+Contribute to a test suite for your shell. (This is a task shared by everyone in the class)
 
->Write your own getline function
+Write your own getline function
 
-getline function is usefull for getting the user input in command prompt.
+>getline function is usefull for getting the user input in command prompt.
 
 #### Usage:
 
@@ -107,9 +107,9 @@ getline function is usefull for getting the user input in command prompt.
 _getline(&buffer, &bufferSize, stdin);
 ````
 
->You are not allowed to use strtok
+You are not allowed to use strtok
 
-strtok function is usefull fo cutting the character(s) we want in a line
+>strtok function is usefull fo cutting the character(s) we want in a line
 
 #### Usage:
 
@@ -117,9 +117,9 @@ strtok function is usefull fo cutting the character(s) we want in a line
 _strtok(string, "character(s)");
 ````
 
->handle arguments for the built-in exit
+handle arguments for the built-in exit
 
-exit function is usefull for exiting a program and printing an integer
+>exit function is usefull for exiting a program and printing an integer
 
 #### Usage:
 
@@ -129,94 +129,12 @@ julien@ubuntu:~/shell$ echo $?
 98
 ````
 
->Handle Ctrl+C: your shell should not quit when the user inputs ^C
+Handle Ctrl+C: your shell should not quit when the user inputs ^C
 
-Because we already use Ctrl+D to exit our custom shell
+>Because we already use Ctrl+D to exit our custom shell
 
 #### Usage:
 
 ````
 signal(SIGINT, SIG_IGN); /* Ignore the Ctrl+c Input */
-````
-
->Implement the setenv and unsetenv builtin commands
-
-#### Usage:
-
-````
-
-````
-
->Implement the builtin command cd
-
-#### Usage:
-
-````
-
-````
-
->Handle the commands separator ';'
-
-#### Usage:
-
-````
-
-````
-
->Handle the '&&' and '||' shell logical operators
-
-#### Usage:
-
-````
-
-````
-
->Implement the alias builtin command
-
-#### Usage:
-
-````
-
-````
-
->Handle variables replacement
->Handle the '$?' variable
->Handle the '$$' variable
-
-####Usage:
-
-````
-
-````
-
->Handle comments (#)
-
-#### Usage:
-
-````
-
-````
-
->Implement the help built-in
-
-#### Usage:
-
-````
-
-````
-
->Implement the history built-in, without any argument
-
-#### Usage:
-
-````
-
-````
-
->File as input
-
-#### Usage:
-
-````
-
 ````
