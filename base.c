@@ -1,3 +1,4 @@
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <sys/types.h>
@@ -46,32 +47,30 @@ char *_which(char *prmCommandName)
 	if (prmCommandName == NULL)
 		exit(EXIT_FAILURE);
 
-	/* Try to find the command */
-	if (stat(prmCommandName, &st) != 0)
+	paths = _parsingEnvironment("PATH");
+
+	if (paths == NULL)
+		return (NULL);
+
+	tmpPaths = paths;
+
+	while (tmpPaths != NULL)
 	{
-		paths = _parsingEnvironment("PATH");
+		absolutePath = _generateAbsolutePath(tmpPaths, prmCommandName);
 
-		if (paths == NULL)
-			return (NULL);
-
-		tmpPaths = paths;
-
-		while (tmpPaths != NULL)
+		/* Check if absolute path exist */
+		if (stat(absolutePath, &st) == 0)
 		{
-			absolutePath = _generateAbsolutePath(tmpPaths, prmCommandName);
-
-			/* Check if absolute path exist */
-			if (stat(absolutePath, &st) == 0)
-			{
-				_freeList(paths);
-				return (absolutePath);
-			}
-			free(absolutePath);
-			tmpPaths = tmpPaths->next;
+			_freeList(paths);
+			return (absolutePath);
 		}
-		_freeList(paths);
+		free(absolutePath);
+		tmpPaths = tmpPaths->next;
 	}
-	else
+	_freeList(paths);
+
+	/* Try to find the command */
+	if (stat(prmCommandName, &st) == 0)
 		return (prmCommandName);
 
 	return (NULL);
