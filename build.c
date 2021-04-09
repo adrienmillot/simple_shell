@@ -12,11 +12,18 @@
  *
  * Return: true if custom command
  */
-int _isBuildIn(char *prmCommandName)
+int _isBuildIn(char *prmCommandName, char **prmArguments, char *prmBuffer)
 {
+	int code = EXIT_SUCCESS;
+
 	if (_strcmp(prmCommandName, "exit") == 0)
-		exit(EXIT_SUCCESS);
-	return (0);
+	{
+		if (prmArguments[1] != NULL)
+			code = _atoi(prmArguments[1]);
+		free(prmBuffer);
+		exit(code);
+	}
+	return (code);
 }
 
 /**
