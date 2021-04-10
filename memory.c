@@ -1,5 +1,4 @@
-#include <stdlib.h>
-#include <stdio.h>
+#include "shell.h"
 
 /**
  * _freeDoublePointer - free memory of a double pointer
@@ -20,4 +19,21 @@ void _freeDoublePointer(char **prmPtr)
 	}
 
 	free(prmPtr);
+}
+
+/**
+ * _freeData - free all pointer of the appllication
+ *
+ * @prmData: data structure
+ */
+void _freeData(data_t *prmData)
+{
+	if (prmData == NULL)
+		return;
+
+	if (prmData->buffer != NULL)
+		free(prmData->buffer);
+	if (prmData->arguments != NULL)
+		_freeDoublePointer(prmData->arguments);
+	free(prmData);
 }

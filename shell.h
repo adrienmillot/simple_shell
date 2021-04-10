@@ -9,6 +9,14 @@
 
 extern char **environ;
 
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <signal.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 #include <stddef.h>
 
 /**
@@ -24,6 +32,31 @@ typedef struct environment_s
 	char *value; /* ex: /bin:/usr/bin */
 	struct environment_s *next;
 } environment_t;
+
+/**
+ * Struct data - data variable
+ *
+ * @arguments: argument's array
+ * @buffer: buffer
+ * @command: command name
+ */
+typedef struct data_s
+{
+	char **arguments;
+	char *buffer;
+	char *command;
+} data_t;
+
+/**
+ * struct flags_printf - struct conversion to function
+ * @c: flag string
+ * @f: pointer to func
+ */
+typedef struct customCommand_s
+{
+	char *command;
+	void (*func)(data_t *);
+} customCommand_t;
 
 /**
  * Strings
@@ -50,7 +83,9 @@ int _atoi(char *s);
 /**
  * Build
  */
-int _isBuildIn(char *prmCommandName, char **prmArguments, char *prmBuffer);
+/*int _isBuildIn(char *prmCommandName, char **prmArguments, char *prmBuffer);*/
+void (*_isBuildIn(char *prmCommand))(data_t *);
+data_t *_setData(char *prmCommand, char **prmArguments, char *prmBuffer);
 void _execCmd(char *prmArguments[]);
 
 /**
@@ -80,6 +115,7 @@ environment_t *_parsingEnvironment(char *prmEnvironmentName);
  * Memory
  */
 void _freeDoublePointer(char **prmPtr);
+void _freeData(data_t *prmData);
 
 /**
  * strtow
@@ -93,4 +129,14 @@ char **_strtow(char *prmString, char *prmSeparators);
  * getline
  */
 char *_getline();
+
+/**
+ * env
+ */
+void _env(data_t *prmData);
+
+/**
+ * exit
+ */
+void _exitStatus(data_t *prmData);
 #endif

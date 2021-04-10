@@ -1,34 +1,4 @@
-
-#include <stdlib.h>
-#include <stdio.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <unistd.h>
-#include <string.h>
 #include "shell.h"
-
-/**
- * _getenv - get envioronment variable
- *
- * @prmEnvironmentName: environment variable name
- *
- * Return: environment variable value
- */
-char *_getenv(char *prmEnvironmentName)
-{
-	int cLoop = 0;
-
-	while (environ[cLoop] != NULL)
-	{
-		if (_strstr(environ[cLoop], prmEnvironmentName, 1) != NULL)
-		{
-			return (environ[cLoop]);
-		}
-		cLoop++;
-	}
-
-	return (NULL);
-}
 
 /**
  * _which - get path value of a command

@@ -1,41 +1,54 @@
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <sys/wait.h>
 #include "shell.h"
 
 /**
  * _isBuildIn - check custom command
  *
- * @prmCommandName: command name
- * @prmArguments: argument's array
+ * @prmCommand: command
+ *
+ * Return: pointer function
+ */
+void (*_isBuildIn(char *prmCommand))(data_t *)
+{
+	int i = 0;
+
+	customCommand_t fp[] = {
+		{"env", _env},
+		{"exit", _exitStatus}
+	};
+
+	while (i < 2)
+	{
+		if (_strcmp(prmCommand, (fp + i)->command) == 0)
+			return ((fp + i)->func);
+		i++;
+	}
+
+	return (NULL);
+}
+
+/**
+ * _setData - initialize data structure
+ *
+ * @prmCommand: command name
+ * @prmArguments: argument's list
  * @prmBuffer: buffer
  *
- * Return: true if custom command
+ * Return: data structure
  */
-int _isBuildIn(char *prmCommandName, char **prmArguments, char *prmBuffer)
+data_t *_setData(char *prmCommand, char **prmArguments, char *prmBuffer)
 {
-	int code = EXIT_SUCCESS, cLoop = 0;
+	data_t *data;
 
-	if (_strcmp(prmCommandName, "exit") == 0)
-	{
-		if (prmArguments[1] != NULL)
-			code = _atoi(prmArguments[1]);
-		free(prmBuffer);
-		_freeDoublePointer(prmArguments);
-		exit(code);
-	}
-	else if (_strcmp(prmCommandName, "env") == 0)
-	{
-		while(environ[cLoop])
-		{
-			_puts(environ[cLoop]);
-			_putchar('\n');
-			cLoop++;
-		}
-	}
-	return (code);
+	data = malloc(sizeof(data_t));
+
+	if (prmCommand != NULL)
+		data->command = prmCommand;
+	if (prmArguments != NULL)
+		data->arguments = prmArguments;
+	if (prmBuffer != NULL)
+		data->buffer = prmBuffer;
+
+	return (data);
 }
 
 /**

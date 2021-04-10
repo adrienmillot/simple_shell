@@ -1,7 +1,3 @@
-#include <stdlib.h>
-#include <signal.h>
-#include <stdio.h>
-#include <unistd.h>
 #include "shell.h"
 
 /**
@@ -23,8 +19,8 @@ void ctrlC(int prmSignal __attribute__((unused)))
 int main(void)
 {
 	char *buffer = NULL, **argv = NULL;
-
-	(void) argv;
+	data_t *data;
+	void (*func)(data_t *);
 
 	do {
 		/* Ignore interactive signal */
@@ -45,21 +41,17 @@ int main(void)
 			_freeDoublePointer(argv);
 			continue;
 		}
-		else if (_isBuildIn(argv[0], argv, buffer) != 0)
-			perror("Custom action to execute !\n");
+		data = _setData(argv[0], argv, buffer);
+		func = _isBuildIn(data->command);
+		if (func != NULL)
+			func(data);
 		else
 			_execCmd(argv);
 
-		if (buffer != NULL && isatty(STDIN_FILENO))
-			free(buffer);
-		if (argv != NULL && isatty(STDIN_FILENO))
-			_freeDoublePointer(argv);
-	} while (buffer != NULL);
+		_freeData(data);
+	} while (1);
 
-	if (buffer != NULL && isatty(STDIN_FILENO))
-		free(buffer);
-	if (argv != NULL && isatty(STDIN_FILENO))
-		_freeDoublePointer(argv);
+	_freeData(data);
 
 	return (EXIT_SUCCESS);
 }
