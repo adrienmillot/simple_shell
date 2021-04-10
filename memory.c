@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 
 /**
  * _freeDoublePointer - free memory of a double pointer
@@ -7,16 +8,16 @@
  */
 void _freeDoublePointer(char **prmPtr)
 {
+	int cLoop = 0;
+
 	if (prmPtr == NULL)
 		return;
 
-	while (*prmPtr != NULL)
+	while (prmPtr[cLoop] != NULL)
 	{
-		free(*prmPtr);
-		prmPtr++;
+		free(prmPtr[cLoop]);
+		cLoop++;
 	}
 
-	if (*prmPtr == NULL)
-		free(*prmPtr);
 	free(prmPtr);
 }

@@ -95,3 +95,26 @@ char *_strcpy(char *dest, char *src)
 
 	return (dest);
 }
+
+/**
+ * _inArray - Search a character in an array
+ *
+ * @c: character to search
+ * @s: character array where to search
+ *
+ * Return: true if success
+ */
+int _inArray(char c, char *s)
+{
+	int cLoop;
+
+	for (cLoop = 0; s[cLoop] != '\0'; cLoop++)
+	{
+		if (s[cLoop] == c)
+		{
+			return (1);
+		}
+	}
+
+	return (0);
+}

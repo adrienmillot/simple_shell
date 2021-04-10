@@ -1,9 +1,11 @@
 #ifndef SHELL_H
 #define SHELL_H
 
-#define SEPARATORS " \n\t\r\a\v"
+#define SEPARATORS " \t\r\a\v\n"
 #define PATH_SEPARATOR ":"
+#define ENV_SEPARATOR "="
 #define PROMPT "$ "
+#define BUFFER_SIZE 256
 
 extern char **environ;
 
@@ -26,6 +28,8 @@ typedef struct environment_s
 /**
  * Strings
  */
+int _putchar(char c);
+int _puts(char *str);
 int _strlen(char *s);
 char *_str_concat(char *s1, char *s2);
 int _strcmp(char *s1, char *s2);
@@ -35,11 +39,18 @@ unsigned int _strspn(char *s, char *accept);
 char *_strchr(char *s, char c);
 char *_strncat(char *dest, char *src, int n);
 char *_strcpy(char *dest, char *src);
+int _inArray(char c, char *s);
+
+/**
+ * Numbers
+ */
+int isNumber(char c);
+int _atoi(char *s);
 
 /**
  * Build
  */
-int _isBuildIn(char *prmCommandName);
+int _isBuildIn(char *prmCommandName, char **prmArguments, char *prmBuffer);
 void _execCmd(char *prmArguments[]);
 
 /**
@@ -64,11 +75,22 @@ size_t _printLinkedList(const environment_t *h);
 void _parsingString(char *prmString, char *prmSeparator, char *prmArgv[]);
 void _parsingArguments(char *prmParametersLine, char *prmArgv[]);
 environment_t *_parsingEnvironment(char *prmEnvironmentName);
-char *_strtok(char *__restrict __s, const char *__restrict __delim);
 
 /**
  * Memory
  */
 void _freeDoublePointer(char **prmPtr);
 
+/**
+ * strtow
+ */
+int _characterNumber(char *prmString, char *prmSeparators);
+int _wordNumber(char *prmString, char *prmSeparators);
+char *_getWord(char *prmGlobal, int prmOffset, int prmSize);
+char **_strtow(char *prmString, char *prmSeparators);
+
+/**
+ * getline
+ */
+char *_getline();
 #endif
