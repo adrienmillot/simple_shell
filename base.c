@@ -39,13 +39,13 @@ char *_getenv(char *prmEnvironmentName)
  */
 char *_which(char *prmCommandName)
 {
-	char *absolutePath = ""/*, lastCharacter, *tmpAbsolutePath*/;
+	char *absolutePath = "";
 	struct stat st;
 	environment_t *paths, *tmpPaths;
 	/*int pathValueSize;*/
 
 	if (prmCommandName == NULL)
-		exit(EXIT_FAILURE);
+		return (NULL);
 
 	paths = _parsingEnvironment("PATH");
 

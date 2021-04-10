@@ -61,40 +61,34 @@ environment_t *_parsingEnvironment(char *prmEnvironmentName)
 {
 	char *name, *strToken, *environmentVariable, *tmpEnv;
 	environment_t *environmentList, *new;
-	int sizeEnv;
 
 	environmentList = NULL;
 	environmentVariable = _getenv(prmEnvironmentName);
-
-	sizeEnv = _strlen(environmentVariable);
-	tmpEnv = malloc(sizeof(char) * sizeEnv + 1);
-	if (tmpEnv == NULL)
-		return (NULL);
-	tmpEnv = _strcpy(tmpEnv, environmentVariable);
-
-	strToken = strtok(tmpEnv, "=");
-	(void) strToken;
+	tmpEnv = _strdup(environmentVariable);
+	strToken = strtok(tmpEnv, ENV_SEPARATOR);
 
 	if (strToken == NULL)
 		return (NULL);
 
-	name = strToken;
-	(void) name;
+	name = tmpEnv;
+	if (tmpEnv != NULL)
 
 	while (strToken != NULL)
 	{
 		if (strToken != name)
 		{
 			new = _addNodeEnd(&environmentList, name, strToken);
+			(void) new;
 
 			if (new == NULL)
 			{
 				_freeList(environmentList);
+				free(strToken);
 				free(tmpEnv);
 				return (NULL);
 			}
 		}
-		strToken = strtok(NULL, ":");
+		strToken = strtok(NULL, PATH_SEPARATOR);
 	}
 	free(tmpEnv);
 

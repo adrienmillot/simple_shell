@@ -9,14 +9,33 @@
  * _isBuildIn - check custom command
  *
  * @prmCommandName: command name
+ * @prmArguments: argument's array
+ * @prmBuffer: buffer
  *
  * Return: true if custom command
  */
-int _isBuildIn(char *prmCommandName)
+int _isBuildIn(char *prmCommandName, char **prmArguments, char *prmBuffer)
 {
+	int code = EXIT_SUCCESS, cLoop = 0;
+
 	if (_strcmp(prmCommandName, "exit") == 0)
-		exit(EXIT_SUCCESS);
-	return (0);
+	{
+		if (prmArguments[1] != NULL)
+			code = _atoi(prmArguments[1]);
+		free(prmBuffer);
+		_freeDoublePointer(prmArguments);
+		exit(code);
+	}
+	else if (_strcmp(prmCommandName, "env") == 0)
+	{
+		while(environ[cLoop])
+		{
+			_puts(environ[cLoop]);
+			_putchar('\n');
+			cLoop++;
+		}
+	}
+	return (code);
 }
 
 /**
@@ -37,7 +56,15 @@ void _execCmd(char *prmArguments[])
 	command = _which(prmArguments[0]);
 
 	if (command != NULL)
+	{
+		if (prmArguments[0] != command)
+			free(prmArguments[0]);
 		prmArguments[0] = command;
+	}
+	else
+	{
+		return;
+	}
 
 	/* Create a child */
 	child_pid = fork();
@@ -46,9 +73,8 @@ void _execCmd(char *prmArguments[])
 		/* Execute command*/
 		if (execve(prmArguments[0], prmArguments, environ) == -1)
 			perror(prmArguments[0]);
-		exit(0);
+		return;
 	}
 	else
 		waitpid(child_pid, &status, WUNTRACED);
-	free(command);
 }

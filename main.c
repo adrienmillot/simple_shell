@@ -11,8 +11,8 @@
  */
 void ctrlC(int prmSignal __attribute__((unused)))
 {
-		write(STDIN_FILENO, "\n", 1);
-		write(STDIN_FILENO, PROMPT, 2);
+	write(STDIN_FILENO, "\n", 1);
+	write(STDIN_FILENO, PROMPT, 2);
 }
 
 /**
@@ -22,8 +22,9 @@ void ctrlC(int prmSignal __attribute__((unused)))
  */
 int main(void)
 {
-	char *buffer = NULL, *argv[5];
-	size_t bufferSize = 0;
+	char *buffer = NULL, **argv = NULL;
+
+	(void) argv;
 
 	do {
 		/* Ignore interactive signal */
@@ -33,27 +34,32 @@ int main(void)
 		write(STDIN_FILENO, PROMPT, 2);
 
 		/* Catch user command*/
-		if (getline(&buffer, &bufferSize, stdin) == EOF)
-		{
-			if (isatty(STDIN_FILENO))
-				write(STDIN_FILENO, "\n", 1);
-			break;
-		}
+		buffer = _getline();
 
 		/* Split arguments*/
-		_parsingArguments(buffer, argv);
+		argv = _strtow(buffer, SEPARATORS);
 
 		if (argv == NULL || argv[0] == NULL)
+		{
+			free(buffer);
+			_freeDoublePointer(argv);
 			continue;
-		else if (_isBuildIn(argv[0]) == 1)
+		}
+		else if (_isBuildIn(argv[0], argv, buffer) != 0)
 			perror("Custom action to execute !\n");
 		else
 			_execCmd(argv);
 
+		if (buffer != NULL && isatty(STDIN_FILENO))
+			free(buffer);
+		if (argv != NULL && isatty(STDIN_FILENO))
+			_freeDoublePointer(argv);
 	} while (buffer != NULL);
 
 	if (buffer != NULL && isatty(STDIN_FILENO))
 		free(buffer);
+	if (argv != NULL && isatty(STDIN_FILENO))
+		_freeDoublePointer(argv);
 
 	return (EXIT_SUCCESS);
 }
