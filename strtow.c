@@ -1,5 +1,3 @@
-#include <stdlib.h>
-#include <stdio.h>
 #include "shell.h"
 
 /**
@@ -38,7 +36,7 @@ int _wordNumber(char *prmString, char *prmSeparators)
 	while (prmString[cLoop] != '\0')
 	{
 		if (
-			_inArray(prmString[cLoop], prmSeparators) != 1 && 
+			_inArray(prmString[cLoop], prmSeparators) != 1 &&
 			_inArray(prmString[cLoop + 1], prmSeparators) == 1
 		)
 			count++;
@@ -57,6 +55,7 @@ int _wordNumber(char *prmString, char *prmSeparators)
  *
  * Return: Word number
  */
+
 char *_getWord(char *prmGlobal, int prmOffset, int prmSize)
 {
 	char *word;
@@ -83,7 +82,7 @@ char *_getWord(char *prmGlobal, int prmOffset, int prmSize)
  *
  * Return: word array
  */
-char **_strtow(char *prmString , char *prmSeparators)
+char **_strtow(char *prmString, char *prmSeparators)
 {
 	int cLoop = 0, cLoop1 = 0, size, wordSize = 0, word_number;
 	char *word;
