@@ -4,6 +4,7 @@
 #define SEPARATORS " \t\r\a\v\n"
 #define PATH_SEPARATOR ":"
 #define ENV_SEPARATOR "="
+#define ESCAPE_SEPARATOR "#"
 #define PROMPT "$ "
 #define BUFFER_SIZE 256
 
@@ -128,7 +129,7 @@ char *_memset(char *s, char b, unsigned int n);
 int _characterNumber(char *prmString, char *prmSeparators);
 int _wordNumber(char *prmString, char *prmSeparators);
 char *_getWord(char *prmGlobal, int prmOffset, int prmSize);
-char **_strtow(char *prmString, char *prmSeparators);
+char **_strtow(char *prmString, char *prmSeparators, char *prmEscapeSeparators);
 
 /**
  * getline

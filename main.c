@@ -33,7 +33,7 @@ int main(void)
 		buffer = _getline();
 
 		/* Split arguments */
-		argv = _strtow(buffer, SEPARATORS);
+		argv = _strtow(buffer, SEPARATORS, ESCAPE_SEPARATOR);
 
 		if (argv == NULL || argv[0] == NULL)
 		{

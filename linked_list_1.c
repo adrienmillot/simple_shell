@@ -12,7 +12,7 @@ environment_t *_createNode(char *prmName, char *prmValue)
 {
 	environment_t *new;
 
-	if (prmName == NULL || prmValue == NULL)
+	if (prmName == NULL)
 		return (NULL);
 
 	new = malloc(sizeof(environment_t));
