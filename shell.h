@@ -103,6 +103,7 @@ environment_t *_getLastNode(environment_t *prmHeadNode);
 environment_t *_addNodeEnd(environment_t **prmHead, char *prmName, char *prmValue);
 void _freeList(environment_t *head);
 size_t _printLinkedList(const environment_t *h);
+environment_t *get_nodeint_at_index(environment_t *prmHead, unsigned int prmIndex);
 
 /**
  * Parsing
@@ -116,6 +117,10 @@ environment_t *_parsingEnvironment(char *prmEnvironmentName);
  */
 void _freeDoublePointer(char **prmPtr);
 void _freeData(data_t *prmData);
+char *_memcpy(char *dest, char *src, unsigned int n);
+void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
+void *_calloc(unsigned int nmemb, unsigned int size);
+char *_memset(char *s, char b, unsigned int n);
 
 /**
  * strtow
@@ -133,10 +138,31 @@ char *_getline();
 /**
  * env
  */
+char *_getenv(char *prmEnvironmentName);
 void _env(data_t *prmData);
+int _setenv(char *prmName, char *prmValue, int prmOverwrite);
+int _unsetenv(char *prmName);
+char *_getenvvalue(char *prmEnvironmentName);
 
 /**
  * exit
  */
 void _exitStatus(data_t *prmData);
+
+/**
+ * cd
+ */
+void _changeDirectory(data_t *prmData);
+
+
+/**
+ * setenv
+ */
+void _setEnvironmentVariable(data_t *prmData);
+void _unsetEnvironmentVariable(data_t *prmData);
+
+/**
+ * strtok
+ */
+char *_strtok(char *prmString, char *prmSeparators, char **prmSavePtr);
 #endif

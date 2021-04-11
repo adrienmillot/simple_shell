@@ -27,8 +27,8 @@ char *_getline()
 		buffer[i] = c;
 		if (i >= bufferSize)
 		{
+			buffer = _realloc(buffer, bufferSize, sizeof(char) * (bufferSize + 1));
 			bufferSize += 1;
-			buffer = realloc(buffer, sizeof(char) * bufferSize);
 		}
 		i++;
 	}

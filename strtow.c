@@ -94,7 +94,7 @@ char **_strtow(char *prmString, char *prmSeparators)
 	if (prmString == NULL || !prmString || word_number == 0)
 		return (NULL);
 
-	words = calloc(sizeof(char *), (word_number + 1));
+	words = _calloc(sizeof(char *), (word_number + 1));
 
 	if (words == NULL)
 		return (NULL);

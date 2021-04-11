@@ -91,7 +91,7 @@ char *_strstr(char *haystack, char *needle, int prmBegin)
 
 	for (
 		haystackLoop = 0, needleLoop = 0;
-		haystack[haystackLoop + needleLoop] != '\0';
+		(haystackLoop + needleLoop) < _strlen(haystack);
 		needleLoop++
 	)
 	{
