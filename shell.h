@@ -166,4 +166,16 @@ void _unsetEnvironmentVariable(data_t *prmData);
  * strtok
  */
 char *_strtok(char *prmString, char *prmSeparators, char **prmSavePtr);
+
+/**
+ * help
+ */
+void _help(data_t *prmData);
+void _anyHelpFound(char *prmCommand);
+void _cdHelp();
+void _envHelp();
+void _setenvHelp();
+void _unsetenvHelp();
+void _exitHelp();
+void _helpHelp();
 #endif

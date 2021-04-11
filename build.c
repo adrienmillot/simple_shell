@@ -16,10 +16,11 @@ void (*_isBuildIn(char *prmCommand))(data_t *)
 		{"env", _env},
 		{"setenv", _setEnvironmentVariable},
 		{"unsetenv", _unsetEnvironmentVariable},
-		{"exit", _exitStatus}
+		{"exit", _exitStatus},
+		{"help", _help}
 	};
 
-	while (i < 5)
+	while (i < 6)
 	{
 		if (_strcmp(prmCommand, (fp + i)->command) == 0)
 			return ((fp + i)->func);
