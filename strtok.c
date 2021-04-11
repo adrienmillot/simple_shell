@@ -1,13 +1,13 @@
 #include "shell.h"
 
 /**
- * _strtok - 
+ * _strtok - parse a string
  *
- * @prmString:
- * @prmSeparators:
- * @prmSavePtr:
+ * @prmString: string
+ * @prmSeparators: separators
+ * @prmSavePtr: rest of the string
  *
- * Return:
+ * Return: first token of the string
  */
 char *_strtok(char *prmString, char *prmSeparators, char **prmSavePtr)
 {

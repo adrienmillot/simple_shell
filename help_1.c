@@ -12,8 +12,8 @@ void _help(data_t *prmData)
 	if (prmData->command == NULL)
 		return;
 	if (
-		prmData->arguments == NULL || 
-		prmData->arguments[0] == NULL || 
+		prmData->arguments == NULL ||
+		prmData->arguments[0] == NULL ||
 		prmData->arguments[1] == NULL
 	)
 		return;
@@ -35,6 +35,8 @@ void _help(data_t *prmData)
 
 /**
  * _anyHelpFound - print help when any command found
+ *
+ * @prmCommand: command name
  */
 void _anyHelpFound(char *prmCommand)
 {
@@ -50,7 +52,7 @@ void _anyHelpFound(char *prmCommand)
 /**
  * _cdHelp - printf help for cd command
  */
-void _cdHelp()
+void _cdHelp(void)
 {
 	_puts("cd: cd [DIRECTORY]\n");
 	_puts("    Change the shell working directory.\n\n");
@@ -72,7 +74,7 @@ void _cdHelp()
 /**
  * _envHelp - print help for env command
  */
-void _envHelp()
+void _envHelp(void)
 {
 	_puts("env: env\n");
 	_puts("    prints the current environment.\n\n");
@@ -82,7 +84,7 @@ void _envHelp()
 /**
  * _setenvHelp - print help for setenv command
  */
-void _setenvHelp()
+void _setenvHelp(void)
 {
 	_puts("setenv: setenv [VARIABLE] [VALUE]\n");
 	_puts("    Initializes a new environment variable, ");

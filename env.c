@@ -41,11 +41,11 @@ void _env(data_t *prmData __attribute__((unused)))
 }
 
 /**
- * _getenvvalue -
+ * _getenvvalue - return environment value
  *
- * @prmEnvironmentName:
+ * @prmEnvironmentName: environment name
  *
- * Return:
+ * Return: environment value
  */
 char *_getenvvalue(char *prmEnvironmentName)
 {
@@ -73,13 +73,13 @@ char *_getenvvalue(char *prmEnvironmentName)
 }
 
 /**
- * _setenv -
+ * _setenv - set environment value
  *
- * @prmName:
- * @prmValue:
- * @prmOverwrite:
+ * @prmName: environment name
+ * @prmValue: environment value
+ * @prmOverwrite: overwrite
  *
- * Return:
+ * Return: error code
  */
 int _setenv(char *prmName, char *prmValue, int prmOverwrite)
 {
@@ -118,11 +118,11 @@ int _setenv(char *prmName, char *prmValue, int prmOverwrite)
 }
 
 /**
- * _unsetenv -
+ * _unsetenv - unset environment value
  *
- * @prmName:
+ * @prmName: environment name
  *
- * Return:
+ * Return: error code
  */
 int _unsetenv(char *prmName)
 {
@@ -135,7 +135,9 @@ int _unsetenv(char *prmName)
 		size++;
 
 	if (env == NULL)
+	{
 		return (EXIT_FAILURE);
+	}
 	else
 		while (_strstr(environ[cLoop], prmName, 1) == NULL)
 			cLoop++;

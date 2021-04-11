@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * _setEnvironmentVaribable - set environment variable
+ * _setEnvironmentVariable - set environment variable
  *
  * @prmData: data's structure
  */

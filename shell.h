@@ -154,7 +154,9 @@ void _exitStatus(data_t *prmData);
  * cd
  */
 void _changeDirectory(data_t *prmData);
-
+void _changeToPreviousDirectory(char *prmCurrentDirectory);
+void _changeToHomeDirectory(char *prmCurrentDirectory);
+void _changeToAnyDirectory(data_t *prmData, char *prmCurrentDirectory);
 
 /**
  * setenv

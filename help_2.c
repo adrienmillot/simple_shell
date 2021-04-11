@@ -3,7 +3,7 @@
 /**
  * _unsetenvHelp - print help for unsetenv command
  */
-void _unsetenvHelp()
+void _unsetenvHelp(void)
 {
 	_puts("unsetenv: unsetenv [VARIABLE]\n");
 	_puts("    Initializes a new environment variable, or ");
@@ -16,7 +16,7 @@ void _unsetenvHelp()
 /**
  * _exitHelp - print help for exit command
  */
-void _exitHelp()
+void _exitHelp(void)
 {
 	_puts("exit: exit [n]\n");
 	_puts("    Exit the shell.\n\n");
@@ -28,7 +28,7 @@ void _exitHelp()
 /**
  * _helpHelp - print help for help command
  */
-void _helpHelp()
+void _helpHelp(void)
 {
 	_puts("help: help [BUILTIN ...]\n");
 	_puts("    Display information about builtin commands.\n\n");

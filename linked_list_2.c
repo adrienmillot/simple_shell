@@ -8,8 +8,10 @@
  *
  * Return: a node
  */
-environment_t *get_nodeint_at_index(environment_t *prmHead, unsigned int prmIndex)
-{
+environment_t *get_nodeint_at_index(
+	environment_t *prmHead,
+	unsigned int prmIndex
+) {
 	unsigned int cLoop = 0;
 
 	while (prmHead != NULL)
