@@ -77,10 +77,14 @@ environment_t *_parsingEnvironment(char *prmEnvironmentName)
 
 	while (strToken != NULL)
 	{
+		if (_strcmp(strToken, "") == 0)
+		{
+			strToken = ".";
+			continue;
+		}
 		if (strToken != name)
 		{
 			new = _addNodeEnd(&environmentList, name, strToken);
-			(void) new;
 
 			if (new == NULL)
 			{

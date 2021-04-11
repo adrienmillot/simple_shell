@@ -22,6 +22,12 @@ char *_strtok(char *prmString, char *prmSeparators, char **prmSavePtr)
 		return (NULL);
 	}
 
+	if (_inArray(prmString[0], prmSeparators) == 1)
+	{
+		*prmSavePtr = prmString + 1;
+		return ("");
+	}
+
 	prmString += _strspn(prmString, prmSeparators);
 
 	if (*prmString == '\0')
