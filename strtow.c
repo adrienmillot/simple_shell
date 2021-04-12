@@ -79,10 +79,11 @@ char *_getWord(char *prmGlobal, int prmOffset, int prmSize)
  *
  * @prmString: char pointer
  * @prmSeparators: separators
+ * @prmEscapeSeparators: escaping separators
  *
  * Return: word array
  */
-char **_strtow(char *prmString, char *prmSeparators)
+char **_strtow(char *prmString, char *prmSeparators, char *prmEscapeSeparators)
 {
 	int cLoop = 0, cLoop1 = 0, size, wordSize = 0, word_number;
 	char *word;
@@ -94,13 +95,15 @@ char **_strtow(char *prmString, char *prmSeparators)
 	if (prmString == NULL || !prmString || word_number == 0)
 		return (NULL);
 
-	words = calloc(sizeof(char *), (word_number + 1));
+	words = _calloc(sizeof(char *), (word_number + 1));
 
 	if (words == NULL)
 		return (NULL);
 
 	for (cLoop = 0; cLoop < size && cLoop1 < word_number; cLoop++)
 	{
+		if (_inArray(prmString[cLoop], prmEscapeSeparators) == 1)
+			break;
 		if (_inArray(prmString[cLoop], prmSeparators) != 1)
 			wordSize++;
 		else

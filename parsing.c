@@ -9,10 +9,13 @@
  */
 void _parsingString(char *prmString, char *prmSeparator, char *prmArgv[])
 {
-	char *strToken;
+	char *strToken, **savePtr;
 	int i = 0;
 
-	strToken = strtok(prmString, prmSeparator);
+	savePtr = malloc(sizeof(char *) * 100);
+
+	/*strToken = strtok(prmString, prmSeparator);*/
+	strToken = _strtok(prmString, prmSeparator, savePtr);
 
 	if (strToken == NULL)
 		return;
@@ -20,7 +23,8 @@ void _parsingString(char *prmString, char *prmSeparator, char *prmArgv[])
 	while (strToken != NULL && _strcmp(strToken, "\n") != 0)
 	{
 		prmArgv[i] = strToken;
-		strToken = strtok(NULL, prmSeparator);
+		/*strToken = strtok(NULL, prmSeparator);*/
+		strToken = _strtok(NULL, prmSeparator, savePtr);
 
 		if (strToken == NULL)
 		{
@@ -31,6 +35,7 @@ void _parsingString(char *prmString, char *prmSeparator, char *prmArgv[])
 	}
 	prmArgv[i] = NULL;
 	free(strToken);
+	_freeDoublePointer(savePtr);
 }
 
 /**
@@ -56,13 +61,13 @@ void _parsingArguments(char *prmParametersLine, char *prmArgv[])
  */
 environment_t *_parsingEnvironment(char *prmEnvironmentName)
 {
-	char *name, *strToken, *environmentVariable, *tmpEnv;
+	char *name, *strToken, *environmentVariable, *tmpEnv, *savePtr;
 	environment_t *environmentList, *new;
 
 	environmentList = NULL;
 	environmentVariable = _getenv(prmEnvironmentName);
 	tmpEnv = _strdup(environmentVariable);
-	strToken = strtok(tmpEnv, ENV_SEPARATOR);
+	strToken = _strtok(tmpEnv, ENV_SEPARATOR, &savePtr);
 
 	if (strToken == NULL)
 		return (NULL);
@@ -72,10 +77,14 @@ environment_t *_parsingEnvironment(char *prmEnvironmentName)
 
 	while (strToken != NULL)
 	{
+		if (_strcmp(strToken, "") == 0)
+		{
+			strToken = ".";
+			continue;
+		}
 		if (strToken != name)
 		{
 			new = _addNodeEnd(&environmentList, name, strToken);
-			(void) new;
 
 			if (new == NULL)
 			{
@@ -85,7 +94,8 @@ environment_t *_parsingEnvironment(char *prmEnvironmentName)
 				return (NULL);
 			}
 		}
-		strToken = strtok(NULL, PATH_SEPARATOR);
+		/*strToken = strtok(NULL, PATH_SEPARATOR);*/
+		strToken = _strtok(NULL, PATH_SEPARATOR, &savePtr);
 	}
 	free(tmpEnv);
 

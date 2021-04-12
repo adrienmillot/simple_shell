@@ -24,12 +24,12 @@ char *_getline()
 			exit(EXIT_SUCCESS);
 		}
 
-		buffer[i] = c;
-		if (i >= bufferSize)
+		if (i >= bufferSize - 1)
 		{
-			bufferSize += 1;
-			buffer = realloc(buffer, sizeof(char) * bufferSize);
+			buffer = _realloc(buffer, bufferSize, sizeof(char) * (i + 2));
+			bufferSize = i + 2;
 		}
+		buffer[i] = c;
 		i++;
 	}
 	buffer[i] = '\0';

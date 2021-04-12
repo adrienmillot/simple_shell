@@ -33,7 +33,7 @@ char *_str_concat(char *s1, char *s2)
 	if (s2 == NULL)
 		s2 = "\0";
 
-	size = strlen(s1) + strlen(s2);
+	size = _strlen(s1) + _strlen(s2);
 	s = malloc(sizeof(char) * (size + 1));
 
 	if (s == NULL)
@@ -91,7 +91,7 @@ char *_strstr(char *haystack, char *needle, int prmBegin)
 
 	for (
 		haystackLoop = 0, needleLoop = 0;
-		haystack[haystackLoop + needleLoop] != '\0';
+		(haystackLoop + needleLoop) < _strlen(haystack);
 		needleLoop++
 	)
 	{

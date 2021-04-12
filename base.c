@@ -42,6 +42,8 @@ char *_which(char *prmCommandName)
 	/* Try to find the command */
 	if (stat(prmCommandName, &st) == 0)
 		return (prmCommandName);
+	else
+		perror(prmCommandName);
 
 	return (NULL);
 }

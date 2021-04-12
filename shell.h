@@ -4,6 +4,7 @@
 #define SEPARATORS " \t\r\a\v\n"
 #define PATH_SEPARATOR ":"
 #define ENV_SEPARATOR "="
+#define ESCAPE_SEPARATOR "#"
 #define PROMPT "$ "
 #define BUFFER_SIZE 256
 
@@ -73,11 +74,13 @@ char *_strchr(char *s, char c);
 char *_strncat(char *dest, char *src, int n);
 char *_strcpy(char *dest, char *src);
 int _inArray(char c, char *s);
+unsigned int _strcspn(char *prmString, char *prmDeny);
+char *_strcat(char *dest, char *src);
 
 /**
  * Numbers
  */
-int isNumber(char c);
+int _isNumber(char c);
 int _atoi(char *s);
 
 /**
@@ -102,7 +105,7 @@ environment_t *_createNode(char *prmName, char *prmValue);
 environment_t *_getLastNode(environment_t *prmHeadNode);
 environment_t *_addNodeEnd(environment_t **prmHead, char *prmName, char *prmValue);
 void _freeList(environment_t *head);
-size_t _printLinkedList(const environment_t *h);
+environment_t *get_nodeint_at_index(environment_t *prmHead, unsigned int prmIndex);
 
 /**
  * Parsing
@@ -116,6 +119,10 @@ environment_t *_parsingEnvironment(char *prmEnvironmentName);
  */
 void _freeDoublePointer(char **prmPtr);
 void _freeData(data_t *prmData);
+char *_memcpy(char *dest, char *src, unsigned int n);
+void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
+void *_calloc(unsigned int nmemb, unsigned int size);
+char *_memset(char *s, char b, unsigned int n);
 
 /**
  * strtow
@@ -123,7 +130,7 @@ void _freeData(data_t *prmData);
 int _characterNumber(char *prmString, char *prmSeparators);
 int _wordNumber(char *prmString, char *prmSeparators);
 char *_getWord(char *prmGlobal, int prmOffset, int prmSize);
-char **_strtow(char *prmString, char *prmSeparators);
+char **_strtow(char *prmString, char *prmSeparators, char *prmEscapeSeparators);
 
 /**
  * getline
@@ -133,10 +140,45 @@ char *_getline();
 /**
  * env
  */
+char *_getenv(char *prmEnvironmentName);
 void _env(data_t *prmData);
+int _setenv(char *prmName, char *prmValue, int prmOverwrite);
+int _unsetenv(char *prmName);
+char *_getenvvalue(char *prmEnvironmentName);
 
 /**
  * exit
  */
 void _exitStatus(data_t *prmData);
+
+/**
+ * cd
+ */
+void _changeDirectory(data_t *prmData);
+void _changeToPreviousDirectory(char *prmCurrentDirectory);
+void _changeToHomeDirectory(char *prmCurrentDirectory);
+void _changeToAnyDirectory(data_t *prmData, char *prmCurrentDirectory);
+
+/**
+ * setenv
+ */
+void _setEnvironmentVariable(data_t *prmData);
+void _unsetEnvironmentVariable(data_t *prmData);
+
+/**
+ * strtok
+ */
+char *_strtok(char *prmString, char *prmSeparators, char **prmSavePtr);
+
+/**
+ * help
+ */
+void _help(data_t *prmData);
+void _anyHelpFound(char *prmCommand);
+void _cdHelp();
+void _envHelp();
+void _setenvHelp();
+void _unsetenvHelp();
+void _exitHelp();
+void _helpHelp();
 #endif

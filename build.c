@@ -12,11 +12,15 @@ void (*_isBuildIn(char *prmCommand))(data_t *)
 	int i = 0;
 
 	customCommand_t fp[] = {
+		{"cd", _changeDirectory},
 		{"env", _env},
-		{"exit", _exitStatus}
+		{"setenv", _setEnvironmentVariable},
+		{"unsetenv", _unsetEnvironmentVariable},
+		{"exit", _exitStatus},
+		{"help", _help}
 	};
 
-	while (i < 2)
+	while (i < 6)
 	{
 		if (_strcmp(prmCommand, (fp + i)->command) == 0)
 			return ((fp + i)->func);

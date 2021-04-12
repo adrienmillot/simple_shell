@@ -29,11 +29,11 @@ int main(void)
 		/* Display prompt */
 		write(STDIN_FILENO, PROMPT, 2);
 
-		/* Catch user command*/
+		/* Catch user command */
 		buffer = _getline();
 
-		/* Split arguments*/
-		argv = _strtow(buffer, SEPARATORS);
+		/* Split arguments */
+		argv = _strtow(buffer, SEPARATORS, ESCAPE_SEPARATOR);
 
 		if (argv == NULL || argv[0] == NULL)
 		{

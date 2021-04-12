@@ -37,13 +37,13 @@ unsigned int _strspn(char *s, char *accept)
  */
 char *_strchr(char *s, char c)
 {
-	while (*s >= '\0')
+	int cLoop = 0;
+
+	while (s[cLoop] >= '\0')
 	{
-		if (*s == c)
-		{
-			return (s);
-		}
-		s++;
+		if (s[cLoop] == c)
+			return ((s + cLoop));
+		cLoop++;
 	}
 
 	return (NULL);
