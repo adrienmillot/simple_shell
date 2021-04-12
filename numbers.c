@@ -1,13 +1,13 @@
 #include "shell.h"
 
 /**
- * isNumber - test if a character is a number
+ * _isNumber - test if a character is a number
  *
  * @c: char
  *
  * Return: return 1 if true
  */
-int isNumber(char c)
+int _isNumber(char c)
 {
 	return (c >= '0' && c <= '9');
 }
@@ -29,7 +29,7 @@ int _atoi(char *s)
 	{
 		current = s[cLoop];
 
-		if (isNumber(current))
+		if (_isNumber(current))
 		{
 			number *= 10;
 			number += current - 48;

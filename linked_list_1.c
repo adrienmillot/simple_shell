@@ -105,29 +105,3 @@ void _freeList(environment_t *prmHeadNode)
 	free(prmHeadNode->value);
 	free(prmHeadNode);
 }
-
-/**
- * _printLinkedList - prints all the elements of a list_t list
- *
- * @prmHeadNode: list to browse
- *
- * Return: size of the list
- */
-size_t _printLinkedList(const environment_t *prmHeadNode)
-{
-	if (prmHeadNode == NULL)
-		return (0);
-	if (prmHeadNode->next == NULL)
-	{
-		printf("[%s] %s\n", prmHeadNode->name, prmHeadNode->value);
-		return (1);
-	}
-	else
-	{
-		if (prmHeadNode->name == NULL && prmHeadNode->value == NULL)
-			printf("[0] %s\n", "(nil)");
-		else
-			printf("[%s] %s\n", prmHeadNode->name, prmHeadNode->value);
-		return (_printLinkedList(prmHeadNode->next) + 1);
-	}
-}

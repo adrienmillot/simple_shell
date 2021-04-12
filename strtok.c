@@ -16,12 +16,14 @@ char *_strtok(char *prmString, char *prmSeparators, char **prmSavePtr)
 	if (prmString == NULL)
 		prmString = *prmSavePtr;
 
+	/* if any string is done */
 	if (*prmString == '\0')
 	{
 		*prmSavePtr = prmString;
 		return (NULL);
 	}
 
+	/* if first character is a separator return an empty character */
 	if (_inArray(prmString[0], prmSeparators) == 1)
 	{
 		*prmSavePtr = prmString + 1;
@@ -36,7 +38,7 @@ char *_strtok(char *prmString, char *prmSeparators, char **prmSavePtr)
 		return (NULL);
 	}
 
-	end = prmString + strcspn(prmString, prmSeparators);
+	end = prmString + _strcspn(prmString, prmSeparators);
 
 	if (*end == '\0')
 	{

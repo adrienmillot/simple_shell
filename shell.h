@@ -74,11 +74,13 @@ char *_strchr(char *s, char c);
 char *_strncat(char *dest, char *src, int n);
 char *_strcpy(char *dest, char *src);
 int _inArray(char c, char *s);
+unsigned int _strcspn(char *prmString, char *prmDeny);
+char *_strcat(char *dest, char *src);
 
 /**
  * Numbers
  */
-int isNumber(char c);
+int _isNumber(char c);
 int _atoi(char *s);
 
 /**
@@ -103,7 +105,6 @@ environment_t *_createNode(char *prmName, char *prmValue);
 environment_t *_getLastNode(environment_t *prmHeadNode);
 environment_t *_addNodeEnd(environment_t **prmHead, char *prmName, char *prmValue);
 void _freeList(environment_t *head);
-size_t _printLinkedList(const environment_t *h);
 environment_t *get_nodeint_at_index(environment_t *prmHead, unsigned int prmIndex);
 
 /**

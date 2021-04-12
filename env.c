@@ -89,9 +89,9 @@ int _setenv(char *prmName, char *prmValue, int prmOverwrite)
 	newValue = _calloc(sizeof(char), (_strlen(prmName) + _strlen(prmValue) + 2));
 	env = _getenv(prmName);
 
-	newValue = strcat(newValue, prmName);
-	newValue = strcat(newValue, "=");
-	newValue = strcat(newValue, prmValue);
+	newValue = _strcat(newValue, prmName);
+	newValue = _strcat(newValue, "=");
+	newValue = _strcat(newValue, prmValue);
 
 	if (env == NULL)
 	{
@@ -105,7 +105,7 @@ int _setenv(char *prmName, char *prmValue, int prmOverwrite)
 	{
 		while (environ[cLoop] != env)
 			cLoop++;
-		strcpy(environ[cLoop], newValue);
+		_strcpy(environ[cLoop], newValue);
 		free(newValue);
 	}
 	else
