@@ -131,6 +131,7 @@ int _characterNumber(char *prmString, char *prmSeparators);
 int _wordNumber(char *prmString, char *prmSeparators);
 char *_getWord(char *prmGlobal, int prmOffset, int prmSize);
 char **_strtow(char *prmString, char *prmSeparators, char *prmEscapeSeparators);
+void _addWord(char *prmString, int prmOffset, int *prmSize, int *prmIndex, char **prmWords);
 
 /**
  * getline

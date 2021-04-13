@@ -36,8 +36,10 @@ int _wordNumber(char *prmString, char *prmSeparators)
 	while (prmString[cLoop] != '\0')
 	{
 		if (
-			_inArray(prmString[cLoop], prmSeparators) != 1 &&
-			_inArray(prmString[cLoop + 1], prmSeparators) == 1
+			(_inArray(prmString[cLoop], prmSeparators) != 1 ||
+			prmString[cLoop] == '\0') &&
+			(_inArray(prmString[cLoop + 1], prmSeparators) == 1 ||
+			prmString[cLoop + 1] == '\0')
 		)
 			count++;
 		cLoop++;
@@ -85,8 +87,7 @@ char *_getWord(char *prmGlobal, int prmOffset, int prmSize)
  */
 char **_strtow(char *prmString, char *prmSeparators, char *prmEscapeSeparators)
 {
-	int cLoop = 0, cLoop1 = 0, size, wordSize = 0, word_number;
-	char *word;
+	int cLoop = 0, cLoop1 = 0, size, wordSize = 0, word_number = 0;
 	char **words = NULL;
 
 	size = _strlen(prmString);
@@ -95,28 +96,50 @@ char **_strtow(char *prmString, char *prmSeparators, char *prmEscapeSeparators)
 	if (prmString == NULL || !prmString || word_number == 0)
 		return (NULL);
 
-	words = _calloc(sizeof(char *), (word_number + 1));
+	words = _calloc(sizeof(char *), (word_number + 2));
 
 	if (words == NULL)
 		return (NULL);
 
 	for (cLoop = 0; cLoop < size && cLoop1 < word_number; cLoop++)
 	{
-		if (_inArray(prmString[cLoop], prmEscapeSeparators) == 1)
+		if (
+			prmEscapeSeparators != NULL &&
+			_inArray(prmString[cLoop], prmEscapeSeparators) == 1
+		)
 			break;
-		if (_inArray(prmString[cLoop], prmSeparators) != 1)
+		if (
+			_inArray(prmString[cLoop], prmSeparators) != 1 &&
+			prmString[cLoop] != '\0' &&
+			cLoop < size
+		)
 			wordSize++;
 		else
-			if (wordSize > 0)
-			{
-				word = _getWord(prmString, cLoop - wordSize, wordSize);
-				words[cLoop1] = _strdup(word);
-				wordSize = 0;
-				cLoop1++;
-				free(word);
-			}
+		{
+			_addWord(prmString, cLoop - wordSize, &wordSize, &cLoop1, words);
+		}
 	}
+	_addWord(prmString, cLoop - wordSize, &wordSize, &cLoop1, words);
 	words[cLoop1] = 0;
 
 	return (words);
+}
+
+void _addWord(
+	char *prmString,
+	int prmOffset,
+	int *prmSize,
+	int *prmIndex,
+	char **prmWords
+	) {
+	char *word;
+
+	if (*prmSize > 0)
+	{
+		word = _getWord(prmString, prmOffset, *prmSize);
+		prmWords[*prmIndex] = _strdup(word);
+		*prmSize = 0;
+		*prmIndex += 1;
+		free(word);
+	}
 }
