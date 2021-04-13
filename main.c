@@ -24,29 +24,19 @@ int main(void)
 	int cLoop = 0;
 
 	do {
-		/* Ignore interactive signal */
 		signal(SIGINT, ctrlC);
-
-		/* Display prompt */
 		write(STDIN_FILENO, PROMPT, 2);
-
-		/* Catch user command */
 		buffer = _getline();
-
 		argv_tmp = _strtow(buffer, ";\n", NULL);
-
 		if (argv_tmp == NULL || argv_tmp[0] == NULL)
 		{
 			_freeDoublePointer(argv_tmp);
 			continue;
 		}
-
 		cLoop = 0;
-		while(argv_tmp[cLoop] != NULL)
+		while (argv_tmp[cLoop] != NULL)
 		{
-			/* Split arguments */
 			argv = _strtow(argv_tmp[cLoop], SEPARATORS, ESCAPE_SEPARATOR);
-
 			if (argv == NULL || argv[0] == NULL)
 			{
 				free(argv_tmp[cLoop]);
@@ -59,14 +49,11 @@ int main(void)
 				func(data);
 			else
 				_execCmd(argv);
-
 			_freeData(data);
 			cLoop++;
 		}
 		free(buffer);
 	} while (1);
-
 	_freeData(data);
-
 	return (EXIT_SUCCESS);
 }
