@@ -24,6 +24,9 @@ char *_which(char *prmCommandName)
 
 	tmpPaths = paths;
 
+	if (prmCommandName[0] == '.' && prmCommandName[1] == '/' && stat(prmCommandName, &st) == 0)
+		return (prmCommandName);
+
 	while (tmpPaths != NULL)
 	{
 		absolutePath = _generateAbsolutePath(tmpPaths, prmCommandName);
