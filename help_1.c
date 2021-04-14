@@ -19,15 +19,15 @@ void _help(data_t *prmData)
 		return;
 	if (_strcmp(prmData->arguments[1], "cd") == 0)
 		_cdHelp();
-	if (_strcmp(prmData->arguments[1], "env") == 0)
+	else if (_strcmp(prmData->arguments[1], "env") == 0)
 		_envHelp();
-	if (_strcmp(prmData->arguments[1], "setenv") == 0)
+	else if (_strcmp(prmData->arguments[1], "setenv") == 0)
 		_setenvHelp();
-	if (_strcmp(prmData->arguments[1], "unsetenv") == 0)
+	else if (_strcmp(prmData->arguments[1], "unsetenv") == 0)
 		_unsetenvHelp();
-	if (_strcmp(prmData->arguments[1], "exit") == 0)
+	else if (_strcmp(prmData->arguments[1], "exit") == 0)
 		_exitHelp();
-	if (_strcmp(prmData->arguments[1], "help") == 0)
+	else if (_strcmp(prmData->arguments[1], "help") == 0)
 		_helpHelp();
 	else
 		_anyHelpFound(prmData->arguments[1]);
@@ -54,21 +54,32 @@ void _anyHelpFound(char *prmCommand)
  */
 void _cdHelp(void)
 {
-	_puts("cd: cd [DIRECTORY]\n");
-	_puts("    Change the shell working directory.\n\n");
-	_puts("    Change the current directory to DIR.  ");
-	_puts("    The default DIR is the value of the\n");
-	_puts("    HOME shell variable.\n\n");
-	_puts("    Options:\n");
-	_puts("    -  If a minus signed is used instead a directory, ");
-	_puts("    cd will change to the\n");
-	_puts("       previous used directory\n\n");
-	_puts("    Each time cd runs successfuly, the env variable ");
-	_puts("    PWD is updated\n\n");
+	_puts("cd: cd [-L|[-P [-e]] [-@]] [dir]\n    Change the shell working dir");
+	_puts("ectory.\n\n    Change the current directory to DIR.  The default DIR");
+	_puts(" is the value of the\n    HOME shell variable.\n    The variable CDP");
+	_puts("ATH defines the search path for the directory containing\n    DIR.  ");
+	_puts("Alternative directory names in CDPATH are separated by a ");
+	_puts("colon (:).\n    A null directory name is the same as the current dir");
+	_puts("ectory.  If DIR begins\n    with a slash (/), then CDPATH is not use");
+	_puts("d.\n\n    If the directory is not found, and the shell option `cdabl");
+	_puts("e_vars' is set,\n    the word is assumed to be  a variable name.  If");
+	_puts(" that variable has a value,\n    its value is used for DIR.\n\n    O");
+	_puts("ptions:\n        -L      force symbolic links to be followed: resolv");
+	_puts("e symbolic links in\n        DIR after processing instances of `..'");
+	_puts("\n        -P      use the physical directory structure without foll");
+	_puts("owing symbolic\n        links: resolve symbolic links in DIR before");
+	_puts(" processing instances\n        of `..'\n        -e      if the -P o");
+	_puts("ption is supplied, and the current working directory\n        canno");
+	_puts("t be determined successfully, exit with a non-zero status\n        ");
+	_puts("-@  on systems that support it, present a file with extended attrib");
+	_puts("utes\n            as a directory containing the file attributes\n\n");
+	_puts("    The default is to follow symbolic links, as if `-L' were specif");
+	_puts("ied.\n");
+	_puts("    `..' is processed by removing the immediately previous pathname");
+	_puts(" component\n    back to a slash or the beginning of DIR.\n\n");
 	_puts("    Exit Status:\n");
-	_puts("    Returns 1 if the directory is changed, and if $PWD is set ");
-	_puts("    successfully when\n");
-	_puts("    is used; -1 otherwise.\n");
+	_puts("    Returns 0 if the directory is changed, and if $PWD is set succe");
+	_puts("ssfully when\n    -P is used; non-zero otherwise.\n");
 }
 
 /**
