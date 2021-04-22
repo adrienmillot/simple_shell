@@ -16,5 +16,7 @@ void _freeEnvList(environment_t *prmHeadNode)
 	prmHeadNode->name = NULL;
 	free(prmHeadNode->value);
 	prmHeadNode->value = NULL;
+	free(prmHeadNode->global);
+	prmHeadNode->global = NULL;
 	free(prmHeadNode);
 }

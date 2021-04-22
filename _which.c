@@ -9,9 +9,9 @@
  */
 char *_which(appData_t *prmData)
 {
-	environment_t *pathList;
-	char *absolutePath;
+	char **pathList, *absolutePath;
 	struct stat st;
+	int cLoop = 0;
 
 	pathList = _parsingPathEnvironment(prmData);
 
@@ -25,20 +25,20 @@ char *_which(appData_t *prmData)
 	)
 		return (prmData->commandName);
 
-	while (pathList != NULL)
+	while (pathList[cLoop] != NULL)
 	{
-		absolutePath = _generateAbsolutePath(pathList, prmData->commandName);
+		absolutePath = _generateAbsolutePath(pathList[cLoop], prmData->commandName);
 
 		/* Check if absolute path exist */
 		if (stat(absolutePath, &st) == 0)
 		{
-			_freeEnvList(pathList);
+			_freeCharDoublePointer(pathList);
 			return (absolutePath);
 		}
 		free(absolutePath);
-		pathList = pathList->next;
+		cLoop++;
 	}
-	_freeEnvList(pathList);
+	_freeCharDoublePointer(pathList);
 
 	/* Try to find the command */
 	if (stat(prmData->commandName, &st) == 0)

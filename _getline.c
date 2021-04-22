@@ -3,14 +3,16 @@
 /**
  * _getline - Return command line type by user
  *
+ * @prmData: data structure
+ *
  * Return: buffer
  */
-char *_getline()
+void _getline(appData_t *prmData)
 {
-	char c = '\0', *buffer;
+	char c = '\0';
 	int i = 0, rd, bufferSize = BUFFER_SIZE;
 
-	buffer = malloc(sizeof(char) * BUFFER_SIZE + 1);
+	prmData->buffer = _calloc(sizeof(char), BUFFER_SIZE);
 
 	while (c != '\n' && c != EOF)
 	{
@@ -18,21 +20,26 @@ char *_getline()
 
 		if (rd == 0)
 		{
-			c = EOF;
 			_putchar('\n');
-			free(buffer);
+			if (prmData->env != NULL)
+				_freeEnvList(prmData->env);
+			prmData->env = NULL;
+			_freeAppData(prmData);
+			free(prmData);
 			exit(EXIT_SUCCESS);
 		}
 
 		if (i >= bufferSize - 1)
 		{
-			buffer = _realloc(buffer, bufferSize, sizeof(char) * (i + 2));
+			prmData->buffer = _realloc(
+				prmData->buffer,
+				bufferSize,
+				sizeof(char) * (i + 2)
+			);
 			bufferSize = i + 2;
 		}
-		buffer[i] = c;
+		prmData->buffer[i] = c;
 		i++;
 	}
-	buffer[i] = '\0';
-
-	return (buffer);
+	prmData->buffer[i] = '\0';
 }

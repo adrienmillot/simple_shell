@@ -1,13 +1,24 @@
 #include "shell.h"
 
 /**
- * _getenvvalue - return environment name
+ * _getenvname - return environment name
  *
  * @prmVariable: environment name
  *
  * Return: environment name
  */
-char *_getenvname(char *prmVariable __attribute__((unused)))
+char *_getenvname(char *prmVariable)
 {
-	return (NULL);
+	char **tmp, *name;
+
+	tmp = _strtow(prmVariable, ENV_SEPARATOR, NULL);
+
+	if (tmp == NULL)
+		return (NULL);
+
+	name = _strdup(tmp[0]);
+	_freeCharDoublePointer(tmp);
+	tmp = NULL;
+
+	return (name);
 }

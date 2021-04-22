@@ -3,25 +3,24 @@
 /**
  * _changeToPreviousDirectory - change to previous directory
  *
+ * @prmData: data structure
  * @prmCurrentDirectory: current directory path
  */
-void _changeToPreviousDirectory(char *prmCurrentDirectory)
+void _changeToPreviousDirectory(appData_t *prmData, char *prmCurrentDirectory)
 {
 	struct stat st;
-	char *newDirectory;
+	environment_t *newDirectory;
 
-	newDirectory = _getenvvalue("OLDPWD");
+	newDirectory = _getenv(prmData->env, "OLDPWD");
 
-	if (stat(newDirectory, &st) == 0)
+	if (stat(newDirectory->value, &st) == 0)
 	{
-		chdir(newDirectory);
+		chdir(newDirectory->value);
 		/* set old path environment variable */
-		_setenv("OLDPWD", prmCurrentDirectory, 1);
-		free(newDirectory);
+		_setenv(prmData->env, "OLDPWD", prmCurrentDirectory, 1);
 	}
 	else
 	{
-		free(newDirectory);
-		perror(newDirectory);
+		perror(newDirectory->value);
 	}
 }

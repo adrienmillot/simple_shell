@@ -3,30 +3,32 @@
 /**
  * _generateAbsolutePath - Generate an absolute path from environment variable
  *
- * @prmPaths: path environment variable
+ * @prmPath: path environment variable
  * @prmCommandName: command name
  *
  * Return: absolute path
  */
-char *_generateAbsolutePath(environment_t *prmPaths, char *prmCommandName)
+char *_generateAbsolutePath(char *prmPath, char *prmCommandName)
 {
-	char *tmp, *absolutePath, lastCharacter;
+	char *tmp, *path, *absolutePath, lastCharacter;
 	int pathValueSize;
 
-	pathValueSize = _strlen(prmPaths->value);
-	lastCharacter = prmPaths->value[pathValueSize - 1];
+	path = _strdup(prmPath);
+	pathValueSize = _strlen(path);
+	lastCharacter = path[pathValueSize - 1];
 
 	if (lastCharacter != '/')
 	{
-		tmp = prmPaths->value;
-		prmPaths->value = _strconcat(tmp, "/");
+		tmp = path;
+		path = _strconcat(tmp, "/");
 		free(tmp);
 	}
 
 	tmp = "";
-	tmp = _strconcat(tmp, prmPaths->value);
+	tmp = _strconcat(tmp, path);
 	absolutePath = _strconcat(tmp, prmCommandName);
 	free(tmp);
+	free(path);
 
 	return (absolutePath);
 }

@@ -2,16 +2,22 @@
 #define SHELL_H
 
 #include <stdio.h>
+#include <signal.h>
 #include <stdlib.h>
 #include <sys/stat.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 #include <unistd.h>
 
 #define BUFFER_SIZE 256
 #define ENV_SEPARATOR "="
 #define ESCAPE_SEPARATOR "#"
 #define PATH_SEPARATOR ":"
-#define SEPARATORS " \t\r\a\v\n"
+#define COMMAND_SEPARATOR ";\n"
+#define SEPARATORS " \n"
 #define PROMPT "$ "
+
+extern char **environ;
 
 /**
  * struct environment_s - environment variable
@@ -22,9 +28,9 @@
  */
 typedef struct environment_s
 {
-	char *name;  /* ex: PATH */
-	char *value; /* ex: /bin:/usr/bin */
-	char *global;
+	char *name;   /* ex: PATH */
+	char *value;  /* ex: /bin:/usr/bin */
+	char *global; /* PATH=/bin:/usr/bin */
 	struct environment_s *next;
 } environment_t;
 
@@ -40,7 +46,9 @@ typedef struct appData_s
 	char **arguments;
 	char *buffer;
 	char *commandName;
+	char **commandList;
 	char **history;
+	environment_t *env;
 } appData_t;
 
 /**
@@ -59,13 +67,18 @@ environment_t *_addEnvNodeEnd(
 	environment_t **prmHeadNode,
 	char *prmGlobal
 );
+void _addWord(char *prmWord, int *prmIndex, char **prmArray);
 int _atoi(char *prmString);
 void *_calloc(unsigned int prmNumber, unsigned int prmSize);
 void _cdHelp(void);
 void _changeDirectory(appData_t *prmData);
 void _changeToAnyDirectory(appData_t *prmData, char *prmCurrentDirectory);
-void _changeToHomeDirectory(char *prmCurrentDirectory);
-void _changeToPreviousDirectory(char *prmCurrentDirectory);
+void _changeToHomeDirectory(appData_t *prmData, char *prmCurrentDirectory);
+void _changeToPreviousDirectory(appData_t *prmData, char *prmCurrentDirectory);
+int _checkEndCharacter(char *prmString);
+int _checkEscapeSeparators(char prmChar, char *prmEscapeSeparators);
+int _checkSeparators(char prmChar, char *prmSeparators);
+char *_cleanString(char *prmString);
 environment_t *_createEnvNode(char *prmGlobal);
 void _ctrlC(int prmSignal);
 void _defaultHelp(char *prmCommand);
@@ -78,8 +91,10 @@ void _exitHelp(void);
 void _freeAppData(appData_t *prmData);
 void _freeCharDoublePointer(char **prmPtr);
 void _freeEnvList(environment_t *prmHeadNode);
-char *_generateAbsolutePath(environment_t *prmPaths, char *prmCommandName);
-char *_getenv(char *prmName);
+char *_generateAbsolutePath(char *prmPath, char *prmCommandName);
+char *_generateEnvGlobal(char *prmName, char *prmValue);
+void (*_getCustomFunction(char *prmCommand))(appData_t *);
+environment_t *_getenv(environment_t *prmEnviron, char *prmName);
 char *_getenvname(char *prmVariable);
 char *_getenvvalue(char *prmVariable);
 environment_t *_getEnvNodeAtIndex(
@@ -87,24 +102,29 @@ environment_t *_getEnvNodeAtIndex(
 	unsigned int prmIndex
 );
 environment_t *_getLastEnvNode(environment_t *prmHeadNode);
-char *_getline();
+void _getline(appData_t *prmData);
 char *_getword(char *prmGlobal, int prmOffset, int prmSize);
 void _help(appData_t *prmData);
 void _helpHelp(void);
 int _inArray(char prmChar, char *prmArray);
+appData_t *_initData(void);
+void _initEnvData(appData_t *prmData);
 int _isdigit(char prmChar);
 char *_memcpy(char *prmDest, char *prmSrc, unsigned int prmLimit);
 char *_memset(char *prmString, char prmCharacter, unsigned int prmLimit);
-environment_t *_parsingPathEnvironment();
+char **_parsingPathEnvironment(appData_t *prmData);
+void _printenv(environment_t *prmEnviron);
 int _putchar(char prmChar);
 int _puts(char *prmStr);
 void *_realloc(void *prmPtr, unsigned int prmOldSize, unsigned int prmNewSize);
-void _setenv(char *prmName, char *prmValue, int prmOverwrite);
+void _setenv(environment_t *prmEnviron, char *prmName, char *prmValue, int prmOverwrite);
 void _setenvHelp(void);
 void _setEnvironment(appData_t *prmData);
 char *_strcat(char *prmDest, char *prmSrc);
 int _strcmp(char *prmString1, char *prmString2);
+char *_strcpy(char *prmDest, char *prmSrc);
 char *_strconcat(char *prmString1, char *prmString2);
+char *_strncpy(char *prmDest, char *prmSrc, int prmLimit);
 unsigned int _strcspn(char *prmString, char *prmDeny);
 char *_strdup(char *prmString);
 int _strlen(char *prmStr);

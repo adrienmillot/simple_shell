@@ -3,9 +3,10 @@
 /**
  * _changeToHomeDirectory - change to home directory
  *
+ * @prmData: data structure
  * @prmCurrentDirectory: current directory path
  */
-void _changeToHomeDirectory(char *prmCurrentDirectory)
+void _changeToHomeDirectory(appData_t *prmData, char *prmCurrentDirectory)
 {
 	struct stat st;
 	char *newDirectory;
@@ -16,7 +17,7 @@ void _changeToHomeDirectory(char *prmCurrentDirectory)
 	{
 		chdir(newDirectory);
 		/* set old path environment variable */
-		_setenv("OLDPWD", prmCurrentDirectory, 1);
+		_setenv(prmData->env, "OLDPWD", prmCurrentDirectory, 1);
 		free(newDirectory);
 	}
 	else

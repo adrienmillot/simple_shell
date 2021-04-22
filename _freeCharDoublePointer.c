@@ -9,7 +9,14 @@ void _freeCharDoublePointer(char **prmPtr)
 {
 	int cLoop = 0;
 
+	if (prmPtr == NULL)
+		return;
+
 	while (prmPtr[cLoop] != NULL)
-		free(prmPtr[cLoop++]);
+	{
+		free(prmPtr[cLoop]);
+		prmPtr[cLoop] = NULL;
+		cLoop++;
+	}
 	free(prmPtr);
 }

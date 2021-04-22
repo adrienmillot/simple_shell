@@ -17,7 +17,7 @@ void _changeToAnyDirectory(appData_t *prmData, char *prmCurrentDirectory)
 	{
 		chdir(newDirectory);
 		/* set old path environment variable */
-		_setenv("OLDPWD", prmCurrentDirectory, 1);
+		_setenv(prmData->env, "OLDPWD", prmCurrentDirectory, 1);
 	}
 	else
 		perror(newDirectory);

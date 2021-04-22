@@ -7,7 +7,18 @@
  *
  * Return: environment value
  */
-char *_getenvvalue(char *prmVariable __attribute__((unused)))
+char *_getenvvalue(char *prmVariable)
 {
-	return (NULL);
+	char **tmp, *name;
+
+	tmp = _strtow(prmVariable, ENV_SEPARATOR, NULL);
+
+	if (tmp == NULL)
+		return (NULL);
+
+	name = _strdup(tmp[1]);
+	_freeCharDoublePointer(tmp);
+	tmp = NULL;
+
+	return (name);
 }

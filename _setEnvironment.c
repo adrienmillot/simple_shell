@@ -16,5 +16,5 @@ void _setEnvironment(appData_t *prmData)
 	if (prmData->arguments[1] == NULL && prmData->arguments[2] == NULL)
 		return;
 
-	_setenv(prmData->arguments[1], prmData->arguments[2], 1);
+	_setenv(prmData->env, prmData->arguments[1], prmData->arguments[2], 1);
 }

@@ -12,6 +12,9 @@ int _inArray(char prmChar, char *prmArray)
 {
 	int cLoop;
 
+	if (prmArray == NULL)
+		return (0);
+
 	for (cLoop = 0; prmArray[cLoop] != '\0'; cLoop++)
 		if (prmArray[cLoop] == prmChar)
 			return (1);

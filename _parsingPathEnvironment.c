@@ -3,33 +3,17 @@
 /**
  * _parsingPathEnvironment - split environment variable
  *
- * Return: linked list
+ * @prmData: data structure
+ *
+ * Return: string array
  */
-environment_t *_parsingPathEnvironment()
+char **_parsingPathEnvironment(appData_t *prmData)
 {
-	char *environmentValue, **pathEnvironment, **paths;
-	environment_t *pathList, *new;
-	int cLoop = 0;
+	char **paths;
+	environment_t *pathEnvNode;
 
-	environmentValue = _getenv("PATH");
-	pathEnvironment = _strtow(environmentValue, ENV_SEPARATOR, NULL);
-	paths = _strtow(pathEnvironment[1], PATH_SEPARATOR, NULL);
-	while (paths[cLoop] != NULL)
-	{
-		new = _addEnvNodeEnd(&pathList, environmentValue);
+	pathEnvNode = _getenv(prmData->env, "PATH");
+	paths = _strtow(pathEnvNode->value, PATH_SEPARATOR, NULL);
 
-		if (new == NULL)
-		{
-			_freeEnvList(pathList);
-			_freeCharDoublePointer(paths);
-			_freeCharDoublePointer(pathEnvironment);
-			return (NULL);
-		}
-
-		cLoop++;
-	}
-	_freeCharDoublePointer(pathEnvironment);
-	_freeCharDoublePointer(paths);
-
-	return (pathList);
+	return (paths);
 }

@@ -10,14 +10,25 @@ void _freeAppData(appData_t *prmData)
 	if (prmData == NULL)
 		return;
 
-	_freeCharDoublePointer(prmData->arguments);
+	if (prmData->arguments != NULL)
+		_freeCharDoublePointer(prmData->arguments);
 	prmData->arguments = NULL;
-	free(prmData->buffer);
+	if (prmData->buffer != NULL)
+		free(prmData->buffer);
 	prmData->buffer = NULL;
-	free(prmData->commandName);
+	if (prmData->commandName != NULL)
+		free(prmData->commandName);
 	prmData->commandName = NULL;
-	_freeCharDoublePointer(prmData->history);
+	if (prmData->commandList != NULL)
+		_freeCharDoublePointer(prmData->commandList);
+	prmData->commandList = NULL;
+	if (prmData->history != NULL)
+		_freeCharDoublePointer(prmData->history);
 	prmData->history = NULL;
-	free(prmData);
-	prmData = NULL;
+	/*if (prmData->env != NULL)
+		_freeEnvList(prmData->env);
+	prmData->env = NULL;*/
+	/*if (prmData != NULL)
+		free(prmData);
+	prmData = NULL;*/
 }

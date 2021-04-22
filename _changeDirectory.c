@@ -16,12 +16,12 @@ void _changeDirectory(appData_t *prmData)
 
 	/* Old path */
 	if (_strcmp(prmData->arguments[1], "-") == 0)
-		_changeToPreviousDirectory(currentDirectory);
+		_changeToPreviousDirectory(prmData, currentDirectory);
 	else if (
 		_strcmp(prmData->arguments[1], "~") == 0 ||
 		_strcmp(prmData->arguments[1], "~/") == 0
 	)
-		_changeToHomeDirectory(currentDirectory);
+		_changeToHomeDirectory(prmData, currentDirectory);
 	else
 		_changeToAnyDirectory(prmData, currentDirectory);
 }

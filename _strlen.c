@@ -9,7 +9,7 @@
  */
 int _strlen(char *prmStr)
 {
-	if (prmStr == NULL)
+	if (prmStr == NULL || *prmStr == '\0')
 		return (0);
 	return (_strlen(prmStr + 1) + 1);
 }

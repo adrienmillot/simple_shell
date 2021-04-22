@@ -11,9 +11,11 @@
  */
 char **_strtow(char *prmString, char *prmSeparators, char *prmEscapeSeparators)
 {
-	int cLoop = 0, cLoop1 = 0, size, wordSize = 0, word_number;
-	char *word;
-	char **words = NULL;
+	int cLoop = 0, cLoop1 = 0, wordSize = 0, word_number = 0, size = 0;
+	char *word = NULL, **words = NULL, character;
+
+	if (prmString == NULL)
+		return (NULL);
 
 	size = _strlen(prmString);
 	word_number = _wordNumber(prmString, prmSeparators);
@@ -26,26 +28,22 @@ char **_strtow(char *prmString, char *prmSeparators, char *prmEscapeSeparators)
 	if (words == NULL)
 		return (NULL);
 
-	for (cLoop = 0; cLoop < size && cLoop1 < word_number; cLoop++)
+	for (cLoop = 0; cLoop <= size && cLoop1 < word_number; cLoop++)
 	{
-		if (_inArray(prmString[cLoop], prmEscapeSeparators) == 1)
+		character = prmString[cLoop];
+		if (_checkEscapeSeparators(character, prmEscapeSeparators))
 			break;
-		if (
-			_inArray(prmString[cLoop], prmSeparators) ||
-			prmString[cLoop] == '\0'
-		)
+		if (!_checkSeparators(character, prmSeparators))
 			wordSize++;
 		else
 			if (wordSize > 0)
 			{
 				word = _getword(prmString, cLoop - wordSize, wordSize);
-				words[cLoop1] = _strdup(word);
+				_addWord(word, &cLoop1, words);
 				wordSize = 0;
-				cLoop1++;
-				free(word);
 			}
 	}
-	words[cLoop1] = 0;
+	words[cLoop1] = NULL;
 
 	return (words);
 }
