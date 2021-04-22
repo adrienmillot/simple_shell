@@ -1,57 +1,59 @@
 #include "shell.h"
 
-/**
- * ctrlC - control c managment
- *
- * @prmSignal: signal value
- */
-void ctrlC(int prmSignal __attribute__((unused)))
-{
-	write(STDIN_FILENO, "\n", 1);
-	write(STDIN_FILENO, PROMPT, 2);
-}
-
-/**
- * main - main executable
- *
- * Return: 0 if succeded
- */
 int main(void)
 {
-	char *buffer = NULL, **argv = NULL;
-	data_t *data;
-	void (*func)(data_t *);
+	appData_t *appData = NULL;
+	int cLoop;
+	void (*func)(appData_t *);
+
+	appData = _initData();
 
 	do {
-		/* Ignore interactive signal */
-		signal(SIGINT, ctrlC);
+		signal(SIGINT, _ctrlC);
+		_prompt();
 
-		/* Display prompt */
-		write(STDIN_FILENO, PROMPT, 2);
+		_getline(appData);
 
-		/* Catch user command */
-		buffer = _getline();
+		appData->history = _strtow(appData->buffer, COMMAND_SEPARATOR, ESCAPE_SEPARATOR);
 
-		/* Split arguments */
-		argv = _strtow(buffer, SEPARATORS, ESCAPE_SEPARATOR);
-
-		if (argv == NULL || argv[0] == NULL)
+		if (appData->history == NULL)
 		{
-			free(buffer);
-			_freeDoublePointer(argv);
+			_freeAppData(appData);
+			free(appData);
 			continue;
 		}
-		data = _setData(argv[0], argv, buffer);
-		func = _isBuildIn(data->command);
-		if (func != NULL)
-			func(data);
-		else
-			_execCmd(argv);
 
-		_freeData(data);
+		for (cLoop = 0; appData->history[cLoop] != NULL; cLoop++)
+		{
+			appData->arguments = _strtow(appData->history[cLoop], SEPARATORS, ESCAPE_SEPARATOR);
+
+			if (appData->arguments == NULL)
+			{
+				_freeAppData(appData);
+				_freeEnvList(appData->env);
+				appData->env = NULL;
+				free(appData);
+				appData = NULL;
+				break;
+			}
+
+			appData->commandName = _strdup(appData->arguments[0]);
+
+			if (appData->commandName != NULL)
+			{
+				func = _getCustomFunction(appData->commandName);
+				if (func != NULL)
+					func(appData);
+				else
+					_execCommand(appData);
+			}
+			_freeCharDoublePointer(appData->arguments);
+			appData->arguments = NULL;
+			free(appData->commandName);
+			appData->commandName = NULL;
+		}
+
+		_freeAppData(appData);
 	} while (1);
-
-	_freeData(data);
-
 	return (EXIT_SUCCESS);
 }
