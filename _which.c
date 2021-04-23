@@ -46,7 +46,7 @@ char *_which(appData_t *prmData)
 		return (prmData->commandName);
 	}
 	else
-		perror(prmData->commandName);
+		_errorHandler(prmData, 101);
 
 	return (NULL);
 }

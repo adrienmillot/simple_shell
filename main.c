@@ -1,12 +1,12 @@
 #include "shell.h"
 
-int main(void)
+int main(int argc __attribute__((unused)), char **argv)
 {
 	appData_t *appData = NULL;
 	int cLoop;
 	void (*func)(appData_t *);
 
-	appData = _initData();
+	appData = _initData(argv);
 
 	do {
 		signal(SIGINT, _ctrlC);

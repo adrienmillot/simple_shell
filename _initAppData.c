@@ -5,7 +5,7 @@
  *
  * Return: data structure
  */
-appData_t *_initData(void)
+appData_t *_initData(char **prmArgv)
 {
 	appData_t *appData;
 
@@ -20,6 +20,7 @@ appData_t *_initData(void)
 	appData->commandList = NULL;
 	appData->history = NULL;
 	appData->env = NULL;
+	appData->programName = (prmArgv[0] != NULL) ? prmArgv[0] : NULL;
 	_initEnvData(appData);
 
 	return (appData);

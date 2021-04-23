@@ -48,8 +48,22 @@ typedef struct appData_s
 	char *commandName;
 	char **commandList;
 	char **history;
+	char *programName;
 	environment_t *env;
 } appData_t;
+
+/**
+ * struct errorMessage_s - An structure for each error message
+ *
+ * @ecode: error code
+ * @msg: pointer to error message
+ * @size: error message length.
+ */
+typedef struct errorMessage_s
+{
+	int code;
+	char *msg;
+} errorMessage_t;
 
 /**
  * struct customCommand_s - struct conversion to function
@@ -86,6 +100,7 @@ int _deleteEnvNode(environment_t *prmHead, char *prmName);
 void _prompt(void);
 void _env(appData_t *prmData);
 void _envHelp(void);
+void _errorHandler(appData_t *prmData, int messageCode);
 void _execCommand(appData_t *prmData);
 void _exitStatus(appData_t *prmData);
 void _exitHelp(void);
@@ -109,12 +124,14 @@ char *_getword(char *prmGlobal, int prmOffset, int prmSize);
 void _help(appData_t *prmData);
 void _helpHelp(void);
 int _inArray(char prmChar, char *prmArray);
-appData_t *_initData(void);
+appData_t *_initData(char **prmArgv);
 void _initEnvData(appData_t *prmData);
 int _isdigit(char prmChar);
+char *_itoa(int prmNumber);
 int _listEnvLen(environment_t *prmHead);
 char *_memcpy(char *prmDest, char *prmSrc, unsigned int prmLimit);
 char *_memset(char *prmString, char prmCharacter, unsigned int prmLimit);
+int _nbrLen(int prmNumber);
 char **_parsingPathEnvironment(appData_t *prmData);
 void _printenv(environment_t *prmEnviron);
 int _putchar(char prmChar);

@@ -34,8 +34,12 @@ void _execCommand(appData_t *prmData)
 	{
 		/* Execute command*/
 		if (execve(prmData->commandName, prmData->arguments, NULL) == -1)
-			perror(prmData->commandName);
+			_errorHandler(prmData, 103);
 		return;
+	}
+	else if (child_pid == -1)
+	{
+		_errorHandler(prmData, 102);
 	}
 	else
 		waitpid(child_pid, &status, WUNTRACED);
