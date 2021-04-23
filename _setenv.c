@@ -17,6 +17,9 @@ void _setenv(
 	environment_t *envNode;
 	char *tmp;
 
+	if (prmName == NULL || prmValue == NULL)
+		return;
+
 	envNode = _getenv(prmEnviron, prmName);
 
 	if (envNode == NULL)
