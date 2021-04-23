@@ -13,17 +13,17 @@ char *_which(appData_t *prmData)
 	struct stat st;
 	int cLoop = 0;
 
-	pathList = _parsingPathEnvironment(prmData);
-
-	if (pathList == NULL)
-		return (NULL);
-
 	if (
 		prmData->commandName[0] == '.' &&
 		prmData->commandName[1] == '/' &&
 		stat(prmData->commandName, &st) == 0
 	)
 		return (prmData->commandName);
+
+	pathList = _parsingPathEnvironment(prmData);
+
+	if (pathList == NULL)
+		return (NULL);
 
 	while (pathList[cLoop] != NULL)
 	{
