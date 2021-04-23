@@ -25,7 +25,7 @@ char *_cleanString(char *prmString)
 		cLoopEnd--;
 	cLoopEnd = size - 1 - cLoopEnd;
 
-	string = calloc(sizeof(char), size - cLoopStart - cLoopEnd + 1);
+	string = _calloc(sizeof(char), size - cLoopStart - cLoopEnd + 1);
 	_strncpy(string, (prmString + cLoopStart), size - cLoopStart - cLoopEnd);
 	string[size - cLoopStart - cLoopEnd] = '\0';
 
