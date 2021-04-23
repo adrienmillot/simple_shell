@@ -10,10 +10,10 @@
  */
 int _checkEndCharacter(char *prmString)
 {
+	int cLoop = 0;
+
 	if (prmString == NULL)
 		return (0);
-
-	int cLoop = 0;
 
 	while (!prmString[cLoop])
 		cLoop++;
