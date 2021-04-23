@@ -12,7 +12,8 @@ void _printenv(environment_t *prmEnviron)
 
 	_puts(prmEnviron->name);
 	_puts("=");
-	_puts(prmEnviron->value);
+	if (prmEnviron->value != NULL)
+		_puts(prmEnviron->value);
 	_puts("\n");
 	_printenv(prmEnviron->next);
 }
