@@ -16,7 +16,10 @@ void _exitStatus(appData_t *prmData)
 		code = _atoi(prmData->arguments[1]);
 
 	if (code < 0 || (prmData->arguments[1] != NULL && !_isNumber(prmData->arguments[1])))
+	{
+		_errorHandler(prmData, 106);
 		code = 2;
+	}
 
 	_freeAppData(prmData);
 	_freeEnvList(prmData->env);
