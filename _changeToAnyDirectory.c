@@ -8,12 +8,11 @@
  */
 void _changeToAnyDirectory(appData_t *prmData, char *prmCurrentDirectory)
 {
-	struct stat st;
 	char *newDirectory;
 
 	newDirectory = prmData->arguments[1];
 
-	if (stat(newDirectory, &st) == 0)
+	if (access(newDirectory, R_OK | W_OK) == 0)
 	{
 		chdir(newDirectory);
 		/* set old path environment variable */

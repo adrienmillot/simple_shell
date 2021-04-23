@@ -14,14 +14,15 @@ void _changeDirectory(appData_t *prmData)
 	if (prmData == NULL)
 		return;
 
-	/* Old path */
-	if (_strcmp(prmData->arguments[1], "-") == 0)
-		_changeToPreviousDirectory(prmData, currentDirectory);
-	else if (
+	if (
+		!prmData->arguments[1] ||
 		_strcmp(prmData->arguments[1], "~") == 0 ||
 		_strcmp(prmData->arguments[1], "~/") == 0
 	)
 		_changeToHomeDirectory(prmData, currentDirectory);
+	/* Old path */
+	else if (_strcmp(prmData->arguments[1], "-") == 0)
+		_changeToPreviousDirectory(prmData, currentDirectory);
 	else
 		_changeToAnyDirectory(prmData, currentDirectory);
 }

@@ -8,21 +8,18 @@
  */
 void _changeToHomeDirectory(appData_t *prmData, char *prmCurrentDirectory)
 {
-	struct stat st;
-	char *newDirectory;
+	environment_t *newDirectory;
 
-	newDirectory = _getenvvalue("HOME");
+	newDirectory = _getenv(prmData->env, "HOME");
 
-	if (stat(newDirectory, &st) == 0)
+	if (access(newDirectory->value, R_OK | W_OK) == 0)
 	{
-		chdir(newDirectory);
+		chdir(newDirectory->value);
 		/* set old path environment variable */
 		_setenv(prmData->env, "OLDPWD", prmCurrentDirectory, 1);
-		free(newDirectory);
 	}
 	else
 	{
-		free(newDirectory);
-		perror(newDirectory);
+		perror(newDirectory->value);
 	}
 }
