@@ -16,5 +16,8 @@ void _exitStatus(appData_t *prmData)
 		code = _atoi(prmData->arguments[1]);
 
 	_freeAppData(prmData);
+	_freeEnvList(prmData->env);
+	prmData->env = NULL;
+	free(prmData);
 	exit(code);
 }
