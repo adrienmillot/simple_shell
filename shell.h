@@ -127,6 +127,7 @@ int _inArray(char prmChar, char *prmArray);
 appData_t *_initData(char **prmArgv);
 void _initEnvData(appData_t *prmData);
 int _isdigit(char prmChar);
+int _isNumber(char *s);
 char *_itoa(int prmNumber);
 int _listEnvLen(environment_t *prmHead);
 char *_memcpy(char *prmDest, char *prmSrc, unsigned int prmLimit);
