@@ -2,6 +2,8 @@
 
 /**
  * _printenv - print environment variables
+ *
+ * @prmEnviron: environment variable list
  */
 void _printenv(environment_t *prmEnviron)
 {
