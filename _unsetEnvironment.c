@@ -16,5 +16,5 @@ void _unsetEnvironment(appData_t *prmData)
 	if (prmData->arguments[1] == NULL)
 		return;
 
-	_unsetenv(prmData->arguments[1]);
+	_unsetenv(prmData, prmData->arguments[1]);
 }

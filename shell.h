@@ -82,6 +82,7 @@ char *_cleanString(char *prmString);
 environment_t *_createEnvNode(char *prmGlobal);
 void _ctrlC(int prmSignal);
 void _defaultHelp(char *prmCommand);
+int _deleteEnvNode(environment_t *prmHead, char *prmName);
 void _prompt(void);
 void _env(appData_t *prmData);
 void _envHelp(void);
@@ -97,6 +98,7 @@ void (*_getCustomFunction(char *prmCommand))(appData_t *);
 environment_t *_getenv(environment_t *prmEnviron, char *prmName);
 char *_getenvname(char *prmVariable);
 char *_getenvvalue(char *prmVariable);
+int _getEnvIndex(environment_t *prmHead, char *prmName);
 environment_t *_getEnvNodeAtIndex(
 	environment_t *prmHead,
 	unsigned int prmIndex
@@ -110,6 +112,7 @@ int _inArray(char prmChar, char *prmArray);
 appData_t *_initData(void);
 void _initEnvData(appData_t *prmData);
 int _isdigit(char prmChar);
+int _listEnvLen(environment_t *prmHead);
 char *_memcpy(char *prmDest, char *prmSrc, unsigned int prmLimit);
 char *_memset(char *prmString, char prmCharacter, unsigned int prmLimit);
 char **_parsingPathEnvironment(appData_t *prmData);
@@ -130,7 +133,7 @@ char *_strdup(char *prmString);
 int _strlen(char *prmStr);
 char *_strstr(char *prmHaystack, char *prmNeedle, int prmBegin);
 char **_strtow(char *prmString, char *prmSeparators, char *prmEscapeSeparators);
-void _unsetenv(char *prmName);
+void _unsetenv(appData_t *prmData, char *prmName);
 void _unsetenvHelp(void);
 void _unsetEnvironment(appData_t *prmData);
 char *_which(appData_t *prmData);
